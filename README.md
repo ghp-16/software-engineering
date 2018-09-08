@@ -6,6 +6,7 @@
 ## 注意事项
 
 1. Python仓库中的依赖包定义在`requirements.txt`中，使用以下命令进行安装。
+   **注意**，为了支持测试数据的搜集，请确保依赖包列表中包含`coverage`以及其它用到的工具。
     ```
     pip install -r requirements.txt
     ```
