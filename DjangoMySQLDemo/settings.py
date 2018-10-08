@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'DjangoMySQLDemo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '',
-        'PORT': '',
+        'NAME': 'ac',
+        'USER': 'myadmin@buringmyserver',
+        'PASSWORD': '3.1415926ghp',
+        'HOST': 'buringmyserver.mysql.database.azure.com',
+        'PORT': '3306',
     }
 }
 
