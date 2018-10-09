@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from myblog.models import Employee
 from django.template.loader import get_template
-from  django.http import HttpResponse
+from django.http import HttpResponse
 
 
 def test(request):
