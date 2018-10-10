@@ -7,8 +7,8 @@
 <body >
 
 <form name="mysubmit" action="/test" method="GET">
-    姓名: <input type="text" name="user_name" /><br />
-    邮箱: <input type="text" name="user_mail" /><br />
+    姓名: <input type="text" name="user_name" />{{ name_judge }}<br />
+    密码: <input type="text" name="user_password" />{{ password_judge }}<br />
     <input type="submit" value="提交"></input>
     <input type="reset" value="重置"></input>
 </form>
