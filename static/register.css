@@ -7,7 +7,7 @@ html, body {
     }
 
 body {
-      background: #c17b7b url(bg2.jpg) no-repeat center top !important;
+      background: #c17b7b url(/static/bg2.jpg) no-repeat center top !important;
       /*background-image: url("register_back.jpg");*/
       background-repeat: no-repeat;
       background-size: 100% 100%;

@@ -20,8 +20,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import staticfiles
 
 urlpatterns = [
-    path('', myblog.views.index),
-    path('index.html', myblog.views.index),
+    path('', myblog.views.test),
+    path('index.html', myblog.views.test),
     path('test/', myblog.views.test),
     path('query/', myblog.views.query),
     path('reset.html', myblog.views.reset),

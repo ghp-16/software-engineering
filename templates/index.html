@@ -9,7 +9,7 @@
 
 <body >
   <div id="login_frame" >
-    <form class="login_form" method="get">
+    <form class="login_form" action="" method="get">
     	<h1>清华大学艺术团招新平台</h1>
       <h3 class="line"></h3>
       <h2 style="font-size: 140%;">请选择您的身份</h2>
@@ -21,10 +21,12 @@
       </p>
         <h4 style="font-size: 100%;" id="type" >目前身份：学生</h4>
       <p>
+          {{ name_judge }}<br>
         <label >账号</label>
         <input id="account" name="account">
       </p>
       <p>
+          {{ password_judge }}<br>
         <label >密码</label>
         <input id="password" name="password">
       </p>
@@ -35,6 +37,7 @@
       <p>
       	<a href="reset.html">忘记密码？</a>
       </p>
+        {{ post }}<br />
     </form>
   </div>
   <script src="/static/main.js"></script>
