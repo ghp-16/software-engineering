@@ -44,8 +44,8 @@ def test(request):
     except:
         user_name = ""
         user_password = ""
-    name_judge = "请输入用户名，由汉字、字母、数字、字符组成，长度不超过20"
-    password_judge = "请输入密码，由字母、数字、字符组成，且至少包含两种，长度为8-20"
+    name_judge = ""
+    password_judge = ""
     name_is_ok = 1;
     password_is_ok = 1;
     if user_name != "":
@@ -79,7 +79,7 @@ def test(request):
                 zifu = 1;
         if digit + alpha + zifu <= 1 or len(user_password) < 8 or len(user_password) > 20:
             password_is_ok = 0
-            password_judge = "密码不符合要求（由字母、数字、字符组成，且至少包含两种，长度为8-20）"
+            password_judge = "密码不符合要求"
 
             html = template.render(locals())
             return HttpResponse(html)
