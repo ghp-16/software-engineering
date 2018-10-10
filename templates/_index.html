@@ -1,14 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body >
+<html>
 
+<head>
+  <meta charset="utf-8">
+  <title>login</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+</head>
+
+<<<<<<< HEAD:templates/index.html
+<body >
+  <div id="login_frame" >
+    <form class="login_form" method="get">
+    	<h1>清华大学艺术团招新平台</h1>
+      <h3 class="line"></h3>
+      <h2 style="font-size: 140%;">请选择您的身份</h2>
+      <p >
+        <button onclick="type1()" type="button">学生</button>
+        <button onclick="type2()" type="button">评委</button>
+        <button onclick="type3()" type="button">队伍管理员</button>
+        <button onclick="type4()" type="button">平台管理员</button>
+      </p>
+        <h4 style="font-size: 100%;" id="type" >目前身份：学生</h4>
+      <p>
+        <label >账号</label>
+        <input id="account" name="account">
+      </p>
+      <p>
+        <label >密码</label>
+        <input id="password" name="password">
+      </p>
+      <p>
+        <button type="submit" id="login">登录</button>
+        <button id="register" onclick="location.href='register.html'" type="button">注册</button>
+      </p>
+      <p>
+      	<a href="reset.html">忘记密码？</a>
+      </p>
+    </form>
+  </div>
+  <script src="/static/main.js"></script>
+</body>
+
+</html>
+=======
 <form name="mysubmit" action="/test" method="GET">
-    姓名: <input type="text" name="user_name" /><br />
-    邮箱: <input type="text" name="user_mail" /><br />
+    姓名: <input type="text" name="user_name" />{{ name_judge }}<br />
+    密码: <input type="text" name="user_password" />{{ password_judge }}<br />
     <input type="submit" value="提交"></input>
     <input type="reset" value="重置"></input>
 </form>
@@ -16,3 +53,4 @@
 <a href="/query"><button>查询</button></a>
 </body>
 </html>
+>>>>>>> 0720661161007af4cfb99c138f79edc662e51564:templates/_index.html
