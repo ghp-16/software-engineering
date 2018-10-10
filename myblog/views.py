@@ -122,3 +122,5 @@ def query(request):
     html = template.render(locals())
     return HttpResponse(html)
 # Create your views here.
+
+

@@ -1,0 +1,51 @@
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>register</title>
+  <link rel="stylesheet" type="text/css" href="/static/register.css">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+</head>
+
+<body >
+  <div id="register_frame" >
+    <form class="register_form" method="get">
+      <h1>清华大学艺术团招新平台</h1>
+      <h3 class="line"></h3>
+      <h2 style="font-size: 140%;">请选择您要注册的身份</h2>
+      <p>
+        <button onclick="type1()" type="button">学生</button>
+        <button onclick="type2()" type="button">评委</button>
+        <button onclick="type3()" type="button">队伍管理员</button>
+        <button onclick="type4()" type="button">平台管理员</button>
+      </p>
+        <h4 style="font-size: 16px;" id="type" >目前身份：学生</h4>
+      <p>
+        <label >账号</label>
+        <input id="account" name="account">
+      </p>
+      <p>
+        <label >密码</label>
+        <input id="password" name="password">
+      </p>
+      <p>
+        <label >手机</label>
+        <input id="phone" name="phone">
+      </p>
+      <p>
+        <label >邮箱</label>
+        <input id="e-mail" name="e-mail">
+      </p>
+      <p>
+        <button type="submit" id="register">提交</button>
+      </p>
+      <p>已有账号？
+        <a href="index.html">登录</a>
+      </p>
+    </form>
+  </div>
+  <script src="/static/main.js"></script>
+</body>
+
+</html>
