@@ -36,11 +36,11 @@ def test(request):
     # for i in mylist:
     #     print(i.name)
 
-    template = get_template('_index.html')
+    template = get_template('index.html')
     try:
         post = str(request.POST)
-        user_name = request.GET['user_name']
-        user_password = request.GET['user_password']
+        user_name = request.GET['account']
+        user_password = request.GET['password']
     except:
         user_name = ""
         user_password = ""
@@ -92,8 +92,8 @@ def test(request):
     return HttpResponse(html)
 
 
-def save(name):
-    Employee.objects.create(name=name)
+def save(name,password):
+    Employee.objects.create(name=name,password=password)
 
 
 def query(request):
