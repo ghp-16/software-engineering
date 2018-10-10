@@ -2,6 +2,7 @@ from django.shortcuts import render
 from myblog.models import Employee
 from django.template.loader import get_template
 from django.http import HttpResponse
+import hashlib
 
 
 def test(request):
@@ -19,8 +20,8 @@ def test(request):
     except:
         user_name = ""
         user_mail = ""
-
-    post = "你提交的内容是：" + "姓名：" + user_name + "邮箱："+ user_mail
+    checkcode = hashlib.md5(user_mail.encode("utf-8")).hexdigest()
+    post = "你提交的内容是：" + "姓名：" + user_name + "邮箱："+ checkcode
     if user_name == "" or user_mail == "":
         post = ""
     else:
