@@ -1,0 +1,63 @@
+html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      font-family: Microsoft YaHei;
+      color: #580206;
+    }
+
+body {
+      background: #c17b7b url(bg2.jpg) no-repeat center top !important;
+      /*background-image: url("register_back.jpg");*/
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      text-align: center;
+    }
+h1{
+    font-size: 40px;
+    top:20%;
+}
+div{
+  background-color:#F3DCD4;
+  border-radius:5%;
+  position: absolute;
+  left: 25%; 
+  text-align: center;
+  width: 50%; 
+  height:600px; 
+  top: 120px;
+}
+form{
+  width: 100%;
+  height: 100%;
+}
+.line {
+  background: url(line.png);
+  height: 2px;
+}
+p{
+  width: 100%;
+  height: 5%;
+}
+h2{
+  top:10%;
+  width: 100%;
+  height: 5%;
+}
+label{
+  width: 15%;
+  height: 5%;
+}
+input{
+  width: 35%;
+  height: 100%;
+}
+button{
+  width: 15%;
+  height: 100%;
+  font-size: 50%;
+}
+a{
+  width: 10%;
+  height: 100%;
+}
