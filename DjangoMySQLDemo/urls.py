@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 import myblog.views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import staticfiles
@@ -26,6 +27,10 @@ urlpatterns = [
     # path('query/', myblog.views.query),
     # path('reset.html', myblog.views.reset),
     path('register.html', myblog.views.test),
+    path('homepage/', myblog.views.homepage),
+    url(r'homepage/(.+)',  myblog.views.homepage_deal),
+    # path('homepage/left.html', myblog.views.homepage_deal),
+    # path('homepage/student.html', myblog.views.homepage_deal),
     path('admin/', admin.site.urls),
     path('catalog/', myblog.views.catalog),
 ]
