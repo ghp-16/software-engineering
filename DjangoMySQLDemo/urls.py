@@ -27,6 +27,7 @@ urlpatterns = [
     # path('reset.html', myblog.views.reset),
     path('register.html', myblog.views.test),
     path('admin/', admin.site.urls),
+    path('catalog/', myblog.views.catalog),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
