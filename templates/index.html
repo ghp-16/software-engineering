@@ -9,7 +9,8 @@
 
 <body >
   <div id="login_frame" >
-    <form class="login_form" action="" method="get">
+    <form class="login_form" action="" method="post">
+      {% csrf_token %}
     	<h1>清华大学艺术团招新平台</h1>
       <h3 class="line"></h3>
       <h2 style="font-size: 140%;">请选择您的身份</h2>
