@@ -39,8 +39,7 @@ def test(request):
             mylist = Employee.objects.all()
             for i in mylist:
                 if i.name == user_name:
-                    name_judge = "用户名已存在"
-                    post = ""
+                    post = "用户名已存在"
                     name_is_ok = 0
                     html = template.render(locals())
                     return HttpResponse(html)
@@ -60,7 +59,7 @@ def test(request):
                 zifu = 1;
         if digit + alpha + zifu <= 1 or len(user_password) < 8 or len(user_password) > 20:
             password_is_ok = 0
-            password_judge = "密码不符合要求"
+            post = "密码不符合要求"
 
             html = template.render(locals())
             return HttpResponse(html)
@@ -87,15 +86,16 @@ def test(request):
     if name_is_ok == 1 and password_is_ok == 1 and phone_is_ok ==1 and mail_is_ok==1:
         post = "注册成功，用户名：" + user_name
         save(user_name, user_password,user_phone,user_mail)
-    else:
-        post = ""
+    # else:
+    #     post = ""
+    print(post)
     html = template.render(locals())
     return HttpResponse(html)
 
 
-def save(name,password,phone,mail):
+def save(name, password, phone, mail):
     checkcode = hashlib.md5(password.encode("utf-8")).hexdigest()
-    Employee.objects.create(name=name,password=checkcode,phone=phone,mail=mail)
+    Employee.objects.create(name=name, password=checkcode, phone_number=phone, mail=mail)
 
 
 def query(request):
@@ -141,33 +141,31 @@ def index(request):
     login_is_ok=0
 
     if user_name=="":
-    	post = "请输入用户名"
-    	print(250)
+        post = "请输入用户名"
+        print(250)
     else:
-
-    	mylist = Employee.objects.all()
-    	is_exist = 0
-    	correct_password=""
-    	for i in mylist:
-    		if user_name == i.name:
-    			is_exist = 1
-    			correct_password = i.password
-    			break
-    	if is_exist == 0:
-    		post = "用户不存在"
-    	else:
-    		if user_password == "":
-    			post="请输入密码"
-    		else:
-    			checkcode = hashlib.md5(user_password.encode("utf-8")).hexdigest()
-    			print(checkcode)
-    			print("\n")
-    			print(correct_password)
-    			if checkcode == correct_password:
-
-    				post="登陆成功"
-    			else:
-    				post="密码错误"
+        mylist = Employee.objects.all()
+        is_exist = 0
+        correct_password=""
+        for i in mylist:
+            if user_name == i.name:
+                is_exist = 1
+                correct_password = i.password
+                break
+        if is_exist == 0:
+            post = "用户不存在"
+        else:
+            if user_password == "":
+                post="请输入密码"
+            else:
+                checkcode = hashlib.md5(user_password.encode("utf-8")).hexdigest()
+                print(checkcode)
+                print("\n")
+                print(correct_password)
+                if checkcode == correct_password:
+                    post="登陆成功"
+                else:
+                    post="密码错误"
 
     html = template.render(locals())
     return HttpResponse(html)
