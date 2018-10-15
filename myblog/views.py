@@ -6,6 +6,7 @@ import hashlib
 import re
 import hashlib
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect
 
 
 @csrf_exempt
@@ -13,8 +14,10 @@ def catalog(request):
     template = get_template('register.html')
     html = template.render(locals())
     return HttpResponse(html)
-def test(request):
 
+
+@csrf_exempt
+def test(request):
     template = get_template('register.html')
     try:
         post = ""
@@ -90,6 +93,7 @@ def test(request):
     if name_is_ok == 1 and password_is_ok == 1 and phone_is_ok ==1 and mail_is_ok==1:
         post = "注册成功，用户名：" + user_name
         save(user_name, user_password,user_phone,user_mail)
+        return HttpResponseRedirect('/index.html')
     # else:
     #     post = ""
     print(post)
@@ -160,19 +164,37 @@ def index(request):
             post = "用户不存在"
         else:
             if user_password == "":
-                post="请输入密码"
+                post = "请输入密码"
             else:
                 checkcode = hashlib.md5(user_password.encode("utf-8")).hexdigest()
                 print(checkcode)
                 print("\n")
                 print(correct_password)
                 if checkcode == correct_password:
-                    post="登陆成功"
+                    post = "登陆成功"
+                    return HttpResponseRedirect('/homepage/main.html')
                 else:
-                    post="密码错误"
-
+                    post = "密码错误"
     html = template.render(locals())
     return HttpResponse(html)
+
+
+def homepage(request):
+    template = get_template('main.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+def homepage_deal(request, url):
+    template = get_template(url)
+    html = template.render(locals())
+    return HttpResponse(html)
+    # return HttpResponseRedirect(url)
+    # print("hhh")
+    # print(str(url))
+    # template = get_template('main.html')
+    # html = template.render(locals())
+    # return HttpResponse(html)
 
 
 def register(request):
