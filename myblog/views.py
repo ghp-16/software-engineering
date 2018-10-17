@@ -103,7 +103,7 @@ def test(request):
 
 def save(name, password, phone, mail):
     checkcode = hashlib.md5(password.encode("utf-8")).hexdigest()
-    Employee.objects.create(name=name, password=checkcode, phone_number=phone, mail=mail)
+    Employee.objects.create(name=name, password=checkcode, phone_number=phone, mail=mail,types="student")
 
 
 def query(request):
