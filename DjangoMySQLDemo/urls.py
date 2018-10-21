@@ -23,9 +23,11 @@ from django.contrib import staticfiles
 urlpatterns = [
     path('', myblog.views.index),
     path('index.html', myblog.views.index),
+    path('tsinghua/', myblog.views.login_tsinghua),
+    # path('index.html', myblog.views.login_tsinghua),
     path('test/', myblog.views.test),
     # path('query/', myblog.views.query),
-    # path('reset.html', myblog.views.reset),
+    path('reset.html', myblog.views.reset),
     path('register.html', myblog.views.test),
     path('homepage/', myblog.views.homepage),
     url(r'homepage/(.+)',  myblog.views.homepage_deal),
