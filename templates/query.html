@@ -6,13 +6,12 @@
 </head>
 <body>
 
-<form name="mysubmit" action="/test" method="GET">
-    姓名: <input type="text" name="user_name" /><br />
-    邮箱: <input type="text" name="user_mail" /><br />
+<form name="mysubmit" action="/query" method="GET">
+    要查询的姓名: <input type="text" name="user_name" /><br />
     <input type="submit" value="提交"></input>
     <input type="reset" value="重置"></input>
 </form>
 {{ post }}<br />
-<a href="/query"><button>查询</button></a>
+<a href="/test">回首页</a>
 </body>
 </html>
