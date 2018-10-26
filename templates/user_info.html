@@ -1,0 +1,47 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>All users information</title>
+	<!-- <link rel="stylesheet" type="text/css" href="./static/user_info.css"> -->
+	<!-- <script type="text/javascript" src="/static/user_info.js"></script> -->
+	<script type="text/javascript">
+		var row = 0 ; 
+    	function getRow(r){
+			var i=r.parentNode.parentNode.rowIndex; 
+ 			return i ;
+		}
+		function delRow(r){ 
+            document.getElementById('table').deleteRow(getRow(r));
+		}
+	</script>
+</head>
+<body >
+	<center>
+	<div>
+		<p><a id="info_title" style="font-size: 2em;font-style:黑体">所有用户信息</a></p>
+	</div>
+	<div>
+	<table table border="1" style="text-align:center" id="table">
+		<thead>
+			<tr>
+				<th>学号</th>
+				<th>姓名</th>
+				<th>身份</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<td>{{ user.Name}}</td>
+				<td>{{ user.Email}}</td>
+				<td>{{ user.group_list}}</td>
+				<td><a style="color:blue;cursor:pointer;" onclick="delRow(this);">删除</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	</div>
+	</center>
+</body>
+</html>
