@@ -13,4 +13,4 @@ COPY . $HOME
 EXPOSE 80
 
 ENV PYTHONUNBUFFERED=true
-CMD ["gunicorn", "app.wsgi", "-b", "0.0.0.0:80", "--access-logfile", "-", "--log-level", "info"]
+CMD ["gunicorn", "DjangoMySQLDemo.wsgi", "-b", "0.0.0.0:80", "--access-logfile", "-", "--log-level", "info"]
