@@ -17,3 +17,7 @@
     ```
     gunicorn app.wsgi -b 0.0.0.0:80 --access-logfile - --log-level info
     ```
+<<<<<<< HEAD
+I changed this for testing.
+=======
+>>>>>>> 5288c00b4c33b27e99f4cf22bf37493207cab853
