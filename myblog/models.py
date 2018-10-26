@@ -4,8 +4,8 @@ from django.db import models
 class Employee(models.Model):
     name = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
-    # phone_number = models.CharField(max_length=20)
-    # mail = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=11)
+    mail = models.CharField(max_length=320)
 
 
 class Publisher(models.Model):
