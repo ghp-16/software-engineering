@@ -10,7 +10,8 @@
 
 <body >
   <div id="register_frame" >
-    <form class="register_form" method="get">
+    <form class="register_form" method="post">
+        {% csrf_token %}
       <h1>清华大学艺术团招新平台</h1>
       <h3 class="line"></h3>
       <h2 style="font-size: 140%;">请选择您要注册的身份</h2>
@@ -43,7 +44,7 @@
       </p>
       <p>已有账号？
         <a href="index.html">登录</a>
-        
+
       </p>
     </form>
   </div>

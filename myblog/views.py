@@ -3,51 +3,32 @@ from myblog.models import Employee
 from django.template.loader import get_template
 from django.http import HttpResponse
 import hashlib
+import re
+import hashlib
+from django.views.decorators.csrf import csrf_exempt
 
 
-# def test(request):
-#     # test1 = Employee(name="yc")
-#     # test1.save()
-#     # save('yc')
-#     # mylist = Employee.objects.all()
-#     # for i in mylist:
-#     #     print(i.name)
-#     template = get_template('index.html')
-#     try:
-#         post = str(request.POST)
-#         user_name = request.GET['user_name']
-#         user_mail = request.GET['user_mail']
-#     except:
-#         user_name = ""
-#         user_mail = ""
-#     checkcode = hashlib.md5(user_mail.encode("utf-8")).hexdigest()
-#     post = "你提交的内容是：" + "姓名：" + user_name + "邮箱："+ checkcode
-#     if user_name == "" or user_mail == "":
-#         post = ""
-#     else:
-#         save(user_name)
-#     html = template.render(locals())
-#     return HttpResponse(html)
+@csrf_exempt
 def test(request):
-    # test1 = Employee(name="yc")
-    # test1.save()
-    # save('yc')
-    # mylist = Employee.objects.all()
-    # for i in mylist:
-    #     print(i.name)
 
-    template = get_template('index.html')
+    template = get_template('register.html')
     try:
-        post = str(request.POST)
-        user_name = request.GET['account']
-        user_password = request.GET['password']
+        post = ""
+        user_name = request.POST['account']
+        user_password = request.POST['password']
+        user_phone = request.POST['phone']
+        user_mail = request.POST['e-mail']
     except:
         user_name = ""
         user_password = ""
+        user_phone = ""
+        user_mail = ""
     name_judge = ""
     password_judge = ""
-    name_is_ok = 1;
-    password_is_ok = 1;
+    name_is_ok = 1
+    password_is_ok = 1
+    phone_is_ok = 1
+    mail_is_ok = 1
     if user_name != "":
         if len(user_name) > 20:
             post = ""
@@ -83,18 +64,38 @@ def test(request):
 
             html = template.render(locals())
             return HttpResponse(html)
-    if name_is_ok == 1 and password_is_ok == 1:
+    if user_phone!="":
+        if not user_phone.isdigit() or len(user_phone)!=11:
+            post = "手机号格式不正确"
+            phone_is_ok=0
+            html = template.render(locals())
+            return HttpResponse(html)
+        else:
+            phone_pat = re.compile('^(13\d|14[5|7]|15\d|166|17[3|6|7]|18\d)\d{8}$')
+            res = re.search(phone_pat, user_phone)
+            if not res:
+                post = "手机号格式不正确"
+                phone_is_ok=0
+                html = template.render(locals())
+                return HttpResponse(html)
+    if user_mail!="":
+        if not re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$",user_mail):
+            post = "邮箱格式不正确"
+            mail_is_ok=0
+            html = template.render(locals())
+            return HttpResponse(html)
+    if name_is_ok == 1 and password_is_ok == 1 and phone_is_ok ==1 and mail_is_ok==1:
         post = "注册成功，用户名：" + user_name
-        save(user_name, user_password)
+        save(user_name, user_password,user_phone,user_mail)
     else:
         post = ""
     html = template.render(locals())
     return HttpResponse(html)
 
 
-def save(name,password):
-    checkcode = hashlib.md5(user_mail.encode("utf-8")).hexdigest()
-    Employee.objects.create(name=name,password=checkcode)
+def save(name,password,phone,mail):
+    checkcode = hashlib.md5(password.encode("utf-8")).hexdigest()
+    Employee.objects.create(name=name,password=checkcode,phone=phone,mail=mail)
 
 
 def query(request):
@@ -126,9 +127,48 @@ def query(request):
 
 # Create your views here.
 
-
+@csrf_exempt
 def index(request):
     template = get_template('index.html')
+    try:
+        post = ""
+        user_name = request.POST['account']
+        user_password = request.POST['password']
+    except:
+        user_name = ""
+        user_password = ""
+        post = ""
+    login_is_ok=0
+
+    if user_name=="":
+    	post = "请输入用户名"
+    	print(250)
+    else:
+
+    	mylist = Employee.objects.all()
+    	is_exist = 0
+    	correct_password=""
+    	for i in mylist:
+    		if user_name == i.name:
+    			is_exist = 1
+    			correct_password = i.password
+    			break
+    	if is_exist == 0:
+    		post = "用户不存在"
+    	else:
+    		if user_password == "":
+    			post="请输入密码"
+    		else:
+    			checkcode = hashlib.md5(user_password.encode("utf-8")).hexdigest()
+    			print(checkcode)
+    			print("\n")
+    			print(correct_password)
+    			if checkcode == correct_password:
+
+    				post="登陆成功"
+    			else:
+    				post="密码错误"
+
     html = template.render(locals())
     return HttpResponse(html)
 
