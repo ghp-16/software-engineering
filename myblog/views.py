@@ -9,6 +9,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 @csrf_exempt
+def catalog(request):
+    template = get_template('register.html')
+    html = template.render(locals())
+    return HttpResponse(html)
 def test(request):
 
     template = get_template('register.html')
