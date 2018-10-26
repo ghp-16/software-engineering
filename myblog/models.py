@@ -6,7 +6,7 @@ class Employee(models.Model):
     password = models.CharField(max_length=20)
     phone_number = models.CharField(max_length=11)
     mail = models.CharField(max_length=320)
-    types = models.CharField(max_length=15)
+    types = models.CharField(max_length=15, default="student")
 
 class Publisher(models.Model):
     pub_name = models.CharField(max_length=100)
@@ -16,5 +16,4 @@ class Publisher(models.Model):
 class Book(models.Model):
     book_name = models.CharField(max_length=20)
     author = models.CharField(max_length=20)
-    pub_date = models.DateTimeField('date published')
-    publish = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    pub_date = models.CharField(max_length=20)
