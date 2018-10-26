@@ -35,22 +35,22 @@ def test(request):
     # mylist = Employee.objects.all()
     # for i in mylist:
     #     print(i.name)
-    
+
     template = get_template('index.html')
     try:
         post = str(request.POST)
-        user_name = request.GET['user_name']
-        user_password = request.GET['user_password']
+        user_name = request.GET['account']
+        user_password = request.GET['password']
     except:
         user_name = ""
         user_password = ""
-    name_judge = "请输入用户名，由汉字、字母、数字、字符组成，长度不超过20"
-    password_judge = "请输入密码，由字母、数字、字符组成，且至少包含两种，长度为8-20"
+    name_judge = ""
+    password_judge = ""
     name_is_ok = 1;
     password_is_ok = 1;
-    if user_name!="":
-        if len(user_name)>20:
-            post=""
+    if user_name != "":
+        if len(user_name) > 20:
+            post = ""
             name_is_ok = 0
             html = template.render(locals())
             return HttpResponse(html)
@@ -59,41 +59,41 @@ def test(request):
             for i in mylist:
                 if i.name == user_name:
                     name_judge = "用户名已存在"
-                    post=""
+                    post = ""
                     name_is_ok = 0
                     html = template.render(locals())
                     return HttpResponse(html)
-                
+
     else:
         name_is_ok = 0;
-    if user_password!="":
-        digit=0
-        alpha=0
-        zifu=0
+    if user_password != "":
+        digit = 0
+        alpha = 0
+        zifu = 0
         for item in user_password:
             if item.isdigit():
-                digit=1
+                digit = 1
             elif item.isalpha():
-                alpha=1
+                alpha = 1
             else:
-                zifu=1;
-        if digit+alpha+zifu<=1 or len(user_password)<8 or len(user_password)>20:
+                zifu = 1;
+        if digit + alpha + zifu <= 1 or len(user_password) < 8 or len(user_password) > 20:
             password_is_ok = 0
-            password_judge = "密码不符合要求（由字母、数字、字符组成，且至少包含两种，长度为8-20）"
+            password_judge = "密码不符合要求"
 
             html = template.render(locals())
             return HttpResponse(html)
-    if name_is_ok==1 and password_is_ok==1:
-        post = "注册成功，用户名："+user_name
-        save(user_name,user_password)
+    if name_is_ok == 1 and password_is_ok == 1:
+        post = "注册成功，用户名：" + user_name
+        save(user_name, user_password)
     else:
         post = ""
     html = template.render(locals())
     return HttpResponse(html)
 
 
-def save(name):
-    Employee.objects.create(name=name)
+def save(name,password):
+    Employee.objects.create(name=name,password=password)
 
 
 def query(request):
@@ -121,6 +121,24 @@ def query(request):
             post += "该用户不存在"
     html = template.render(locals())
     return HttpResponse(html)
+
+
 # Create your views here.
 
 
+def index(request):
+    template = get_template('index.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+def register(request):
+    template = get_template('register.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+def reset(request):
+    template = get_template('reset.html')
+    html = template.render(locals())
+    return HttpResponse(html)
