@@ -1,0 +1,19 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>login</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+</head>
+
+<form name="mysubmit" action="/test" method="GET">
+    姓名: <input type="text" name="user_name" />{{ name_judge }}<br />
+    密码: <input type="text" name="user_password" />{{ password_judge }}<br />
+    <input type="submit" value="提交"></input>
+    <input type="reset" value="重置"></input>
+</form>
+{{ post }}<br />
+<a href="/query"><button>查询</button></a>
+</body>
+</html>
