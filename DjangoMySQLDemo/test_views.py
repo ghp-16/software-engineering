@@ -33,7 +33,8 @@ class registerViewTestCase(TestCase):
     myType = {"password": 1, "phone": 2}
 
     def test_username_out_of_range(self):
-        data = {'account': "abcdefghijklmnopqrstuvwxyz",
+        data = {'account': "2016011123",
+                'name': "abcdefghijklmnopqrstuvwxyz",
                 'password': "abcd12345",
                 'phone': "13852663598",
                 'e-mail': "m15044481234@163.com"}
@@ -42,7 +43,8 @@ class registerViewTestCase(TestCase):
         self.assertIn(msg, response_reset.content.decode('utf-8'))
 
     def test_invalid_password(self):
-        data = {'account': "abcd",
+        data = {'account': "2016011123",
+                'name': "abcd",
                 'password': "abcd",
                 'phone': "13852663598",
                 'e-mail': "m15044481234@163.com"}
@@ -57,7 +59,8 @@ class registerViewTestCase(TestCase):
         self.invalid_input_helper(data, msg, type)
 
     def test_invalid_phone_number(self):
-        data = {'account': "abcd",
+        data = {'account': "2016011123",
+                'name': "abcd",
                 'password': "abcd12345",
                 'phone': "1385266359812",
                 'e-mail': "m15044481234@163.com"}

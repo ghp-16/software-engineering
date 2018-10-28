@@ -24,21 +24,42 @@ def test(request):
     template = get_template('register.html')
     try:
         post = ""
-        user_name = request.POST['account']
+        user_number = request.POST['account']
+        user_name = request.POST['name']
         user_password = request.POST['password']
         user_phone = request.POST['phone']
         user_mail = request.POST['e-mail']
     except:
+        user_number=""
         user_name = ""
         user_password = ""
         user_phone = ""
         user_mail = ""
-    name_judge = ""
-    password_judge = ""
+    number_is_ok = 1
     name_is_ok = 1
     password_is_ok = 1
     phone_is_ok = 1
     mail_is_ok = 1
+
+    if user_number!= "":
+        number_pat = re.compile('^20\d{8}$')
+        res = re.search(number_pat, user_number)
+        if not res:
+            post = "学工号格式不正确"
+            number_is_ok=0
+            html = template.render(locals())
+            return HttpResponse(html)
+        mylist = Employee.objects.all()
+        for i in mylist:
+            if i.number == user_number:
+                post = "用户已存在"
+                number_is_ok = 0
+                html = template.render(locals())
+                return HttpResponse(html)
+    else:
+        number_is_ok = 0
+
+
     if user_name != "":
         if len(user_name) > 20:
             post = "用户名过长"
@@ -53,7 +74,6 @@ def test(request):
                     name_is_ok = 0
                     html = template.render(locals())
                     return HttpResponse(html)
-
     else:
         name_is_ok = 0;
     if user_password != "":
@@ -70,9 +90,9 @@ def test(request):
         if digit + alpha + zifu <= 1 or len(user_password) < 8 or len(user_password) > 20:
             password_is_ok = 0
             post = "密码不符合要求"
-
             html = template.render(locals())
             return HttpResponse(html)
+
     if user_phone!="":
         if not user_phone.isdigit() or len(user_phone)!=11:
             post = "手机号格式不正确"
@@ -93,9 +113,10 @@ def test(request):
             mail_is_ok=0
             html = template.render(locals())
             return HttpResponse(html)
-    if name_is_ok == 1 and password_is_ok == 1 and phone_is_ok ==1 and mail_is_ok==1:
+
+    if number_is_ok == 1 and name_is_ok == 1 and password_is_ok == 1 and phone_is_ok ==1 and mail_is_ok==1:
         post = "注册成功，用户名：" + user_name
-        save(user_name, user_password,user_phone,user_mail)
+        save(user_number, user_name, user_password,user_phone,user_mail)
         return HttpResponseRedirect('/index.html')
     # else:
     #     post = ""
@@ -104,9 +125,9 @@ def test(request):
     return HttpResponse(html)
 
 
-def save(name, password, phone, mail):
+def save(number, name, password, phone, mail):
     checkcode = hashlib.md5(password.encode("utf-8")).hexdigest()
-    Employee.objects.create(name=name, password=checkcode, phone_number=phone, mail=mail,types="student")
+    Employee.objects.create(number=number, name=name, password=checkcode, phone_number=phone, mail=mail,types="student")
 
 
 def query(request):
@@ -143,23 +164,23 @@ def index(request):
     template = get_template('index.html')
     try:
         post = ""
-        user_name = request.POST['account']
+        user_number = request.POST['account']
         user_password = request.POST['password']
     except:
-        user_name = ""
+        user_number = ""
         user_password = ""
         post = ""
     login_is_ok=0
 
-    if user_name=="":
-        post = "请输入用户名"
+    if user_number=="":
+        post = "请输入学号"
         print(250)
     else:
         mylist = Employee.objects.all()
         is_exist = 0
         correct_password=""
         for i in mylist:
-            if user_name == i.name:
+            if user_number == i.number:
                 is_exist = 1
                 correct_password = i.password
                 break

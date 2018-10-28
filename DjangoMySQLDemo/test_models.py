@@ -17,6 +17,6 @@ class EmployeeTestCase(TestCase):
         self.assertEqual(user.phone_number, "15044484931")
         self.assertEqual(user.mail, "1215468953@qq.com")
         self.assertEqual(user.types, "teacher")
-
+        self.assertEqual(user.number, "2016011123")
         user1 = Employee.objects.get(name="yec1")
         self.assertEqual(user1.types, "student")
