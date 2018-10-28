@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from myblog.models import Employee
 from django.template.loader import get_template
+from django.forms.models import model_to_dict
 from django.http import HttpResponse
-import hashlib
 import re
 import hashlib
+import json
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
@@ -258,3 +259,47 @@ def login_tsinghua(request):
     html = template.render(locals())
 
     return HttpResponse(html)
+
+#-------------------------------manage_student.html---------------------
+def get_people_list():
+    mylist = []
+    all_team_list = Employee.objects.all()
+    for i in all_team_list:
+         mylist.append(model_to_dict(i))
+    return mylist
+
+    
+
+@csrf_exempt
+def manage_type(request):
+    template = get_template('manage_student.html')
+    dict = request.POST
+    mylist = get_people_list()
+    for i in dict:
+        if "add" in i:
+            Employee.objects.create(number=request.POST['number'],password=request.POST['password'])
+            mylist = get_people_list()
+    html = template.render(locals())
+    return HttpResponse(html)
+
+@csrf_exempt
+def del_Mem(request):
+    if request.is_ajax():
+        Member_num = request.POST.get('Member_num')
+        Employee.objects.filter(number=Member_num).delete()
+        info = "已删除成员\"" + str(Member_num) + "\""
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
+
+@csrf_exempt
+def set_student(request):
+    if request.is_ajax():
+        Member_num = request.POST.get('Member_num')
+        Type = request.POST.get('set_type')
+        Mem = Employee.objects.get(number = Member_num)
+        Mem.types = Type
+        Mem.save()
+        info = "已将成员\"" + str(Member_num) + "\"类型改为"+Type
+        # info = "dsad"
+        response = HttpResponse(json.dumps({"info": info}))
+        return response

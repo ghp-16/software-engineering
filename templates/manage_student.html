@@ -1,0 +1,149 @@
+<html>
+   <head>
+      <title>Bootstrap 模板</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- 引入 Bootstrap -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+      <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+      <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+      <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+	</head>
+	<body onload="creatTab()">
+        <center>
+        <form class="form-inline" method="post">
+            {% csrf_token %}
+            <div class="container">
+                <h2>人员表格</h2>
+                <div class="form-group">
+                    <label for="name">学号：</label>
+                    <input type="text" class="form-control" name="number"
+                        id="team_name" placeholder="请输入姓名">
+                    <label for="name">密码：</label>
+                    <input type="text" class="form-control" name="password"
+                        id="team_name" placeholder="请输入姓名">
+                    <button type="submit" class="btn btn-success" name="add">增加成员</button>
+                </div>
+                <div id="mytab"></div>
+            </div>
+        </form>
+        </center>
+        <script type="text/javascript">
+            function creatTab(){
+                var mylist = {{ mylist|safe }}
+                var tab = '<table class="table"><thead><table class="table">\n' +
+                    '<thead>\n' +
+                    '<tr>\n' +
+                    '<th>#</th>\n' +
+                    '<th>学号</th>\n' +
+                    '<th>姓名</th>\n' +
+                    '<th>手机</th>\n' +
+                    '<th>邮箱</th>\n' +
+                    '<th>身份</th>\n' +
+                    '</tr>\n' +
+                    '</thead>\n' +
+                    '<tbody>';
+                for(var i = 0; i < mylist.length; i++){
+                    tab += '<tr>';
+                    tab += "<td>" + String(i+1) + "</td>";
+                    tab += "<td><label id=\"member" + String(i) + "\">" + String(mylist[i]['number']) + "</label></td>";
+                    tab += "<td>" + String(mylist[i]['name']) + "</td>"      
+                    tab += "<td>" + String(mylist[i]['phone_number']) + "</td>"
+                    tab += "<td>" + String(mylist[i]['mail']) + "</td>"
+                    tab += "<td>" + String(mylist[i]['types']) + "</td>"
+                    tab += "<td><button class=\"btn btn-warning\" name=\"student"
+                                + String(i) + "\" onclick=\"set_student(this)\">设为普通用户</button></td>";
+                    tab += "<td><button class=\"btn btn-warning\" name=\"judge"
+                                + String(i) + "\" onclick=\"set_student(this)\">设为评委</button></td>";
+                    tab += "<td><button class=\"btn btn-warning\" name=\"team_manager"
+                                + String(i) + "\" onclick=\"set_student(this)\">设为队伍管理</button></td>";
+                    tab += "<td><button class=\"btn btn-warning\" name=\"web_manager"
+                                + String(i) + "\" onclick=\"set_student(this)\">设为平台管理</button></td>";
+                    tab += "<td><button class=\"btn btn-danger\" name=\"sub"
+                                + String(i) + "\" onclick=\"delPeople(this)\">删除</button></td>";
+                    tab += '</tr>';
+                }
+                tab += '</tbody>';
+                tab += '</table>';
+                div1 = document.getElementById('mytab');
+                div1.innerHTML=tab;
+            }
+
+            function set_student(element) {
+                var type = element.name.substring(0,1);
+                var str = "";
+                if(type=="s")
+                {
+                  str =  "member" +  element.name.substring(7);
+                  type = "student";
+                  
+                }
+                else if(type == "j")
+                {
+                  str =  "member" +  element.name.substring(5);
+                  type = "judge";
+                }
+                else if(type == "t")
+                {
+                  str =  "member" +  element.name.substring(12);
+                  type = "team_manager";
+                }
+                else if(type == "w")
+                {
+                  str =  "member" +  element.name.substring(11);
+                  type = "web_manager";
+                }
+                // alert(type);
+
+                // str = "member" + element_name.slice();
+                // alert(str);
+                mytext = $("#"+str).text();
+
+                // alert(mytext);
+
+                $.ajax({
+                    type: 'POST',
+                    data: {'Member_num':mytext,'set_type':type},//json
+                    {#contentType: 'application/json',#}
+                    dataType: 'json',
+                    url: 'set_student/',
+                    success: function (data) {
+                        alert(data['info']);
+                    },
+                    error: function (e) {
+                        alert("发送失败");
+                    }
+                });
+            }
+            function delPeople(element) {
+                var element_name = element.name;
+                str = "member" + element_name.substring(3);
+                // alert(str);
+                // alert(element_name);
+                mytext = $("#"+str).text();
+                // alert(mytext);
+                $.ajax({
+                    type: 'POST',
+                    data: {'Member_num':mytext},//json
+                    {#contentType: 'application/json',#}
+                    dataType: 'json',
+                    url: 'delMem/',
+                    success: function (data) {
+                        alert(data['info']);
+                    },
+                    error: function (e) {
+                        alert("发送失败");
+                    }
+                });
+            }
+        </script>
+
+      <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <!-- 包括所有已编译的插件 -->
+      <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+   </body>
+</html>
