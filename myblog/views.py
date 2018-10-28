@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from myblog.models import Employee
+from myblog.models import Employee, Team
 from django.template.loader import get_template
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
@@ -179,11 +179,14 @@ def index(request):
     else:
         mylist = Employee.objects.all()
         is_exist = 0
-        correct_password=""
+        correct_name = ""
+        correct_password = ""
         for i in mylist:
             if user_number == i.number:
                 is_exist = 1
+                correct_name = i.name
                 correct_password = i.password
+
                 break
         if is_exist == 0:
             post = "用户不存在"
@@ -196,6 +199,8 @@ def index(request):
                 print("\n")
                 print(correct_password)
                 if checkcode == correct_password:
+                    request.session['account']=user_number
+                    request.session['username']=correct_name
                     post = "登陆成功"
                     return HttpResponseRedirect('/homepage/main.html')
                 else:
@@ -300,6 +305,38 @@ def set_student(request):
         Mem.types = Type
         Mem.save()
         info = "已将成员\"" + str(Member_num) + "\"类型改为"+Type
-        # info = "dsad"
         response = HttpResponse(json.dumps({"info": info}))
         return response
+
+#-------------------------------manage_team.html---------------------
+def get_team_list():
+    mylist = []
+    all_team_list = Team.objects.all()
+    for i in all_team_list:
+         mylist.append(model_to_dict(i))
+    return mylist
+
+@csrf_exempt
+def manage_team(request):
+    template = get_template('manage_team.html')
+    dict = request.POST
+    mylist = get_team_list()
+    for i in dict:
+        if "add" in i:
+            order = "add"
+
+            Team.objects.create(name=request.POST['team_name'], captain="加油鸭")
+            mylist = get_team_list()
+    post=request.session.get('username')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+@csrf_exempt
+def del_team(request):
+    if request.is_ajax():
+        team_name = request.POST.get('team_name')
+        Team.objects.filter(name=team_name).first().delete()
+        info = "已删除队伍\"" + str(team_name) + "\""
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
+

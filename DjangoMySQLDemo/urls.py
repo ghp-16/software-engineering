@@ -21,23 +21,26 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import staticfiles
 
 urlpatterns = [
+    #________________page link ______________   
     path('', myblog.views.index),
     path('index.html', myblog.views.index),
     path('tsinghua/', myblog.views.login_tsinghua),
     path('homepage/manage_student.html', myblog.views.manage_type),
-    # path('manage_student.html', myblog.views.manage_type),
+    path('homepage/manage_team.html', myblog.views.manage_team),
     # path('index.html', myblog.views.login_tsinghua),
     path('test/', myblog.views.test),
     # path('query/', myblog.views.query),
     path('reset.html', myblog.views.reset),
     path('register.html', myblog.views.test),
     path('homepage/', myblog.views.homepage),
+
+    #______________function link______________________
     url(r'.+\/set_student/',myblog.views.set_student),
     url(r'.+\/delMem/',myblog.views.del_Mem),
+    url(r'.+\/delteam/',myblog.views.del_team),
 
 
 
-    
     url(r'homepage/(.+)',  myblog.views.homepage_deal),
     # path('homepage/left.html', myblog.views.homepage_deal),
     # path('homepage/student.html', myblog.views.homepage_deal),
