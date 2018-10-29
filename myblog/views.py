@@ -264,14 +264,31 @@ def login_tsinghua(request):
     html = template.render(locals())
 
     return HttpResponse(html)
-
-#-------------------------------manage_student.html---------------------
+#-------------------------------get model fuction---------------------
 def get_people_list():
     mylist = []
-    all_team_list = Employee.objects.all()
+    all_people_list = Employee.objects.all()
+    for i in all_people_list:
+         mylist.append(model_to_dict(i))
+    return mylist
+
+def get_team_list():
+    mylist = []
+    all_team_list = Team.objects.all()
     for i in all_team_list:
          mylist.append(model_to_dict(i))
     return mylist
+
+def get_employee(person_number):
+    all_people_list = Employee.objects.all()
+    for i in all_people_list:
+        if(i.number==person_number):
+            return i
+            print("i get number:"+number)
+    
+
+#-------------------------------manage_student.html---------------------
+
 
     
 
@@ -288,7 +305,7 @@ def manage_type(request):
     return HttpResponse(html)
 
 @csrf_exempt
-def del_Mem(request):
+def del_mem(request):
     if request.is_ajax():
         Member_num = request.POST.get('Member_num')
         Employee.objects.filter(number=Member_num).delete()
@@ -301,20 +318,17 @@ def set_student(request):
     if request.is_ajax():
         Member_num = request.POST.get('Member_num')
         Type = request.POST.get('set_type')
+        # Mem = get_employee(Member_num)
+        # Mem.update(number=str(Member_num))
         Mem = Employee.objects.get(number = Member_num)
         Mem.types = Type
         Mem.save()
-        info = "已将成员\"" + str(Member_num) + "\"类型改为"+Type
+        info = "已将成员\"" + str(Member_num) + "\"类型改为"+Type+Mem.number
         response = HttpResponse(json.dumps({"info": info}))
         return response
 
 #-------------------------------manage_team.html---------------------
-def get_team_list():
-    mylist = []
-    all_team_list = Team.objects.all()
-    for i in all_team_list:
-         mylist.append(model_to_dict(i))
-    return mylist
+
 
 @csrf_exempt
 def manage_team(request):
@@ -340,3 +354,50 @@ def del_team(request):
         response = HttpResponse(json.dumps({"info": info}))
         return response
 
+#-------------------------------manage_signup.html---------------------
+@csrf_exempt
+def sign_up(request):
+
+    template = get_template('manage_signup.html')
+    # username=request.session.get('username')
+    user_number=request.session.get('account')
+    person_model = Employee.objects.get(number = user_number)
+    person = model_to_dict(person_model)
+
+    msg = ""
+    order = ""
+    dict = request.POST
+    mylist = get_team_list()
+    for i in dict:
+        if "add" in i:
+            order = "add"
+            Team.objects.create(name=request.POST['team_name'], captain="暂无")
+            mylist = get_team_list()
+    
+    html = template.render(locals())
+    return HttpResponse(html)
+
+@csrf_exempt
+def del_choose(request):
+    if request.is_ajax():
+        person_num=request.session.get('account')
+        team_name = int(request.POST.get('choose'))
+        person = Employee.objects.get(number = person_num)
+        person.choose.pop(team_name)
+        person.save()
+        info = person_num+"已删除志愿\"" + str(team_name+1) + "\""
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
+
+@csrf_exempt
+def get_choose(request):
+    if request.is_ajax():
+        person_num=request.session.get('account')
+        team_name = request.POST.get('team_name')
+        person = Employee.objects.get(number = person_num)
+        print("type is :"+str(type(person.choose)))
+        person.choose.append(team_name)
+        person.save()
+        info = person_num+"已设置队伍\"" + str(team_name) + "\"为志愿"
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
