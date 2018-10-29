@@ -1,0 +1,178 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- PAGE settings -->
+  <link rel="icon" href="https://templates.pingendo.com/assets/Pingendo_favicon.ico">
+  <title>清华大学信息平台</title>
+{#  <meta name="description" content="Wireframe design of a checkout form by Pingendo">#}
+{#  <meta name="keywords" content="Pingendo bootstrap example template wireframe checkout form">#}
+{#  <meta name="author" content="Pingendo">#}
+  <!-- CSS dependencies -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/wireframe.css">
+</head>
+
+<body class="bg-light" onload="get_info()">
+  <div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="text-center col-md-7 mx-auto">
+          <h1 class="">个人信息</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="" style="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <form class="needs-validation" novalidate="" style="">
+              {% csrf_token %}
+            <div class="form-row" style="">
+              <div class="col-md-6 mb-3" style=""> <label for="firstName">姓名<br></label>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="你好鸭" required="">
+                <div class="invalid-feedback"> Valid first name is required. </div>
+              </div>
+              <div class="col-md-6 mb-3" style=""> <label for="schoolNumber">学号<br></label>
+                <input type="text" class="form-control" id="schoolNumber" placeholder="" value="" required="">
+                <div class="col-md-12 mb-3">
+                  <div class="invalid-feedback"> Please select a valid country. </div>
+                </div>
+                <div class="invalid-feedback"> Valid first name is required. </div>
+              </div>
+            </div>
+            <div class="row" style="">
+              <div class="col-md-6 mb-3"> <label for="major">系别</label>
+                  <select class="custom-select d-block w-100" id="major" required="">
+                  <option value="">无</option>
+                  <option value="">计算机系</option>
+                  <option value="">热能系</option>
+                  <option value="">自动化系</option>
+                  <option value="">电机系</option>
+                  <option value="">社科学院</option>
+                </select>
+                <div class="invalid-feedback"> Please provide a valid state. </div>
+              </div>
+              <div class="col-md-6 mb-3"> <label for="grade">年级</label>
+                  <select class="custom-select d-block w-100" id="grade" required="">
+                      <option value="">无</option>
+                      <option value="California">大一</option>
+                      <option value="California">大二</option>
+                      <option value="California">大三</option>
+                      <option value="California">大四</option>
+                </select>
+                <div class="invalid-feedback" style=""> Please provide a valid state. </div>
+              </div>
+            </div>
+            <div class="mb-3" style=""> <label for="email">邮箱 <span class="text-muted"></span></label>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+            </div>
+            <div class="mb-3" style=""> <label for="phone">手机号码<br></label>
+              <input type="text" class="form-control" id="phone" placeholder="your phone number"> </div>
+            <div class="form-group"> <label>Old Password</label>
+                <input type="password" class="form-control" placeholder="Password" id="old_pwd"> </div>
+            <div class="form-group"> <label>New Password</label>
+                <input type="password" class="form-control" placeholder="Password" id="new_pwd"> </div>
+            <div class="form-group"> <label>New Password Again</label><span id="tips"></span>
+                <input type="password" class="form-control" placeholder="Password" id="new_pwd_again" onkeyup="validate_password()"> </div>
+            <div><button class="btn btn-primary text-dark w-100" style="box-shadow: 0px 0px 4px  black;" type="button"
+                         id="submit_btn" disabled="true" onclick="submit_changes()">Submit</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+      <script>
+          function get_info() {
+              $.ajax({
+                  url: 'manage_info/',
+                  dataType: 'json',
+                  success: function (data) {
+                      var name = document.getElementById('firstName');
+                      var number = document.getElementById('schoolNumber');
+                      var major = document.getElementById('major');
+                      var grade = document.getElementById('grade');
+                      var email = document.getElementById('email');
+                      var phone = document.getElementById('phone');
+                      {#alert(name.value);#}
+                      name.value = data['name'];
+                      number.value = data['number'];
+                      for(var i = 0; i < major.options.length; i++){
+                          if(major.options[i].innerHTML == data['major']){
+                              major.options[i].selected = true;
+                              break;
+                          }
+                      }
+                      for(var i = 0; i < grade.options.length; i++){
+                          if(grade.options[i].innerHTML == data['grade']){
+                              grade.options[i].selected = true;
+                              break;
+                          }
+                      }
+                      email.value = data['mail'];
+                      phone.value = data['phone_number']
+                  },
+                  error: function (e) {
+                      alert("信息拉取失败");
+                  }
+              });
+          }
+            
+          function validate_password() {
+              var pwd1 = document.getElementById('new_pwd').value;
+              var pwd2 = document.getElementById('new_pwd_again').value;
+              if(pwd1 == pwd2){
+                  document.getElementById('tips').innerHTML="<font color='green'>&nbsp;&nbsp;&nbsp;&nbsp;提示：两次密码相同</font>";
+                  document.getElementById('submit_btn').disabled = false;
+              }
+              else{
+                  document.getElementById('tips').innerHTML="<font color='red'>&nbsp;&nbsp;&nbsp;&nbsp;提示：两次密码不同</font>";
+                  document.getElementById('submit_btn').disabled = true;
+              }
+          }
+          
+          function submit_changes() {
+              var name = document.getElementById('firstName');
+              var number = document.getElementById('schoolNumber');
+              var major = document.getElementById('major');
+              var grade = document.getElementById('grade');
+              var email = document.getElementById('email');
+              var phone = document.getElementById('phone');
+              var old_pwd = document.getElementById('old_pwd');
+              var new_pwd = document.getElementById('new_pwd_again');
+              $.ajax({
+                  type: 'POST',
+                  url: 'modify_info/',
+                  dataType: 'json',
+                  data: {
+                      'name': name.value,
+                      'number': number.value,
+                      'major': major.options[major.selectedIndex].innerHTML,
+                      'grade': grade.options[grade.selectedIndex].innerHTML,
+                      'email': email.value,
+                      'phone': phone.value,
+                      'old_pwd': hex_md5(old_pwd.value),
+                      'new_pwd': hex_md5(new_pwd.value),
+                  },
+                  success: function (data) {
+                      alert(data['info']);
+                  },
+                  error: function (XMLHttpRequest, textStatus, errorThrown) {
+                      alert(XMLHttpRequest.readyState);
+                  }
+              });
+          }
+      </script>
+
+      <script type="text/javascript" src="/static/md5.js"></script>
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      <script src="assets/js/validation.js"></script>
+
+  </div>
+</body>
+
+</html>

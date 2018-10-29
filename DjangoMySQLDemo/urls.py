@@ -41,6 +41,10 @@ urlpatterns = [
     url(r'.+\/delteam/',myblog.views.del_team),
     url(r'.+\/delChoose/',myblog.views.del_choose),
     url(r'.+\/getChoose/',myblog.views.get_choose),
+    url(r'.+\/modify_info/', myblog.views.modify_info),
+    url(r'.+\/manage_info/', myblog.views.get_student_info),
+
+
 
     url(r'homepage/(.+)',  myblog.views.homepage_deal),
     # path('homepage/left.html', myblog.views.homepage_deal),

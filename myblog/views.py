@@ -401,3 +401,62 @@ def get_choose(request):
         info = person_num+"已设置队伍\"" + str(team_name) + "\"为志愿"
         response = HttpResponse(json.dumps({"info": info}))
         return response
+
+#-------------------------------manage_info.html---------------------
+@csrf_exempt
+def get_student_info(request):
+    if request.is_ajax():
+        student_name = request.session.get('username')
+        student = Employee.objects.filter(name=student_name).first()
+        response = HttpResponse(json.dumps(model_to_dict(student)))
+        return response
+
+@csrf_exempt
+def modify_info(request):
+    if request.is_ajax():
+        name = request.POST.get('name')
+        number = request.POST.get('number')
+        major = request.POST.get('major')
+        grade = request.POST.get('grade')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        old_pwd = request.POST.get('old_pwd')
+        new_pwd = request.POST.get('new_pwd')
+        info = "信息修改成功！"
+        if name == "":
+            info = "姓名不能为空！"
+        elif number == "":
+            info = "学号不能为空！"
+        elif major == "":
+            info = "专业不能为空！"
+        elif grade == "":
+            info = "年级不能为空！"
+        elif email == "":
+            info = "邮箱不能为空！"
+        elif phone == "":
+            info = "手机号码不能为空！"
+        elif old_pwd == "":
+            info = "密码不能为空！"
+        elif new_pwd == "":
+            info = "新密码不能为空！"
+        else:
+            phone_pat = re.compile('^(13\d|14[5|7]|15\d|166|17[3|6|7]|18\d)\d{8}$')
+            res = re.search(phone_pat, phone)
+            if not res:
+                info = "手机号格式不正确"
+            else:
+                student = Employee.objects.filter(name=name).first()
+                old_pwd2 = student.password
+                if old_pwd != old_pwd2:
+                    info = old_pwd2
+                else:
+                    student1 = Employee.objects.filter(name=name)
+                    student1.update(name=name,
+                                    number=number,
+                                    major=major,
+                                    grade=grade,
+                                    mail=email,
+                                    phone_number=phone,
+                                    password=new_pwd)
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
