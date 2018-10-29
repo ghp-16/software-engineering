@@ -96,13 +96,10 @@
                   str =  "member" +  element.name.substring(11);
                   type = "web_manager";
                 }
-                // alert(type);
-
-                // str = "member" + element_name.slice();
-                // alert(str);
+                
                 mytext = $("#"+str).text();
-
-                // alert(mytext);
+                alert(type);
+                alert(mytext);
 
                 $.ajax({
                     type: 'POST',

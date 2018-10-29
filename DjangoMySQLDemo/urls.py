@@ -33,13 +33,14 @@ urlpatterns = [
     path('reset.html', myblog.views.reset),
     path('register.html', myblog.views.test),
     path('homepage/', myblog.views.homepage),
+    path('homepage/manage_signup.html', myblog.views.sign_up),
 
     #______________function link______________________
     url(r'.+\/set_student/',myblog.views.set_student),
-    url(r'.+\/delMem/',myblog.views.del_Mem),
+    url(r'.+\/delMem/',myblog.views.del_mem),
     url(r'.+\/delteam/',myblog.views.del_team),
-
-
+    url(r'.+\/delChoose/',myblog.views.del_choose),
+    url(r'.+\/getChoose/',myblog.views.get_choose),
 
     url(r'homepage/(.+)',  myblog.views.homepage_deal),
     # path('homepage/left.html', myblog.views.homepage_deal),

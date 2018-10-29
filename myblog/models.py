@@ -1,5 +1,5 @@
 from django.db import models
-
+from myblog.fields import ListField
 
 class Employee(models.Model):
     name = models.CharField(max_length=20,default="你好鸭")
@@ -10,6 +10,9 @@ class Employee(models.Model):
     number = models.CharField(max_length=10, default="2016011123")
     major = models.CharField(max_length=15, default="计算机系")
     grade = models.CharField(max_length=5, default="大一")
+    choose = ListField()
+    def __str__(self):
+        return "%s " % self.choose
 
 class Team(models.Model):
     name = models.CharField(max_length=10 , default="划水队")
