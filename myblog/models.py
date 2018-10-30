@@ -18,3 +18,9 @@ class Team(models.Model):
     name = models.CharField(max_length=10 , default="划水队")
     captain = models.CharField(max_length=10 , default="可达鸭")
     captain_num = models.CharField(max_length=10 , default="2016011392")
+    # interview = ListField()
+
+# class Interview(models.Model)
+#     team_name = models.CharField(max_length=10 , default="划水队")
+#     judge_list = ListField()
+    

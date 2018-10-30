@@ -299,7 +299,7 @@ def manage_type(request):
     mylist = get_people_list()
     for i in dict:
         if "add" in i:
-            Employee.objects.create(number=request.POST['number'],password=request.POST['password'])
+            Employee.objects.create(number=request.POST['number'],password=request.POST['password'],types='judge')
             mylist = get_people_list()
     html = template.render(locals())
     return HttpResponse(html)
@@ -460,3 +460,47 @@ def modify_info(request):
                                     password=new_pwd)
         response = HttpResponse(json.dumps({"info": info}))
         return response
+
+#-------------------------------manage_interview.html---------------------
+
+
+@csrf_exempt
+def manage_interview(request):
+    template = get_template('manage_interview.html')
+    # dict = request.POST
+    temp_list=[]
+    people_list = get_people_list()
+    judge_list=[]
+    for i in people_list:
+        if i['types']== 'judge':
+            judge_list.append(i)
+
+    # for i in dict:
+    #     if "add" in i:
+    #         order = "add"
+
+    #         Team.objects.create(name=request.POST['team_name'], captain="加油鸭")
+    #         mylist = get_team_list()
+    post=request.session.get('username')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+@csrf_exempt
+def set_judge(request):
+    if request.is_ajax():
+        team_name = request.POST.get('team_name')
+        Team.objects.filter(name=team_name).first().delete()
+        info = "已删除队伍\"" + str(team_name) + "\""
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
+
+
+# @csrf_exempt
+# def del_team(request):
+#     if request.is_ajax():
+#         team_name = request.POST.get('team_name')
+#         Team.objects.filter(name=team_name).first().delete()
+#         info = "已删除队伍\"" + str(team_name) + "\""
+#         response = HttpResponse(json.dumps({"info": info}))
+#         return response
