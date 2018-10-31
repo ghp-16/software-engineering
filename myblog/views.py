@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from myblog.models import Employee, Team
+from myblog.models import Employee, Team, Interview
 from django.template.loader import get_template
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
@@ -461,19 +461,19 @@ def modify_info(request):
         response = HttpResponse(json.dumps({"info": info}))
         return response
 
-#-------------------------------manage_interview.html---------------------
+#-------------------------------interview_edit.html---------------------
 
 
 @csrf_exempt
-def manage_interview(request):
-    template = get_template('manage_interview.html')
+def interview_edit(request):
+    template = get_template('interview_edit.html')
     # dict = request.POST
     temp_list=[]
     people_list = get_people_list()
     judge_list=[]
     for i in people_list:
         if i['types']== 'judge':
-            judge_list.append(i)
+            judge_list.append({"number":i["number"],"name":i["name"],"phone_number":i["phone_number"],"mail":i["mail"]})
 
     # for i in dict:
     #     if "add" in i:
@@ -495,6 +495,26 @@ def set_judge(request):
         response = HttpResponse(json.dumps({"info": info}))
         return response
 
+@csrf_exempt
+def new_interview(request):
+    if request.is_ajax():
+        # print(request.body)
+        json_data=json.loads(request.body.decode('utf-8'))
+        print(json_data)
+        print(json_data['team'])
+        print(json_data['temp_list'])
+        print(type(json_data['temp_list']))
+        Interview.objects.create(team=json_data['team'],
+                                date=json_data['date'],
+                                location=json_data['location'],
+                                start_time=json_data['start_time'],
+                                end_time=json_data['end_time'],
+                                judge_list=json_data['temp_list'],
+                                remarks=json_data['remarks'])
+        info = "lalala"
+        # info = "已建立面试 \"" + temp_inter.judge_list[0]['number'] + "\"："+temp_list
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
 
 # @csrf_exempt
 # def del_team(request):

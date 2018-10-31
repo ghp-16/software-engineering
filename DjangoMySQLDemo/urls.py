@@ -27,7 +27,7 @@ urlpatterns = [
     path('tsinghua/', myblog.views.login_tsinghua),
     path('homepage/manage_student.html', myblog.views.manage_type),
     path('homepage/manage_team.html', myblog.views.manage_team),
-    path('homepage/manage_interview.html', myblog.views.manage_interview),
+    path('homepage/interview_edit.html', myblog.views.interview_edit),
     # path('index.html', myblog.views.login_tsinghua),
     path('test/', myblog.views.test),
     # path('query/', myblog.views.query),
@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'.+\/getChoose/',myblog.views.get_choose),
     url(r'.+\/modify_info/', myblog.views.modify_info),
     url(r'.+\/manage_info/', myblog.views.get_student_info),
-
+    url(r'.+\/new_interview/', myblog.views.new_interview),
 
 
     url(r'homepage/(.+)',  myblog.views.homepage_deal),
