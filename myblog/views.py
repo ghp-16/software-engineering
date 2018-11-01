@@ -279,11 +279,17 @@ def get_team_list():
          mylist.append(model_to_dict(i))
     return mylist
 
+def get_interview_list():
+    mylist = []
+    all_interview_list = Interview.objects.all()
+    for i in all_interview_list:
+         mylist.append(model_to_dict(i))
+    return mylist
+
 def get_employee(person_number):
     all_people_list = Employee.objects.all()
     for i in all_people_list:
         if(i.number==person_number):
-            print("i get number:"+number)
             return i
     
 
@@ -498,7 +504,7 @@ def set_judge(request):
 @csrf_exempt
 def new_interview(request):
     if request.is_ajax():
-        # print(request.body)
+        print(request.body)
         json_data=json.loads(request.body.decode('utf-8'))
         print(json_data)
         print(json_data['team'])
@@ -511,8 +517,8 @@ def new_interview(request):
                                 end_time=json_data['end_time'],
                                 judge_list=json_data['temp_list'],
                                 remarks=json_data['remarks'])
-        info = "lalala"
-        # info = "已建立面试 \"" + temp_inter.judge_list[0]['number'] + "\"："+temp_list
+        # info = "lalala"
+        info = "已建立面试 \"" + str(request.body.decode('utf-8'))
         response = HttpResponse(json.dumps({"info": info}))
         return response
 
@@ -524,3 +530,46 @@ def new_interview(request):
 #         info = "已删除队伍\"" + str(team_name) + "\""
 #         response = HttpResponse(json.dumps({"info": info}))
 #         return response
+
+
+#-------------------------------manage_interview.html---------------------
+
+
+@csrf_exempt
+def manage_interview(request):
+    template = get_template('manage_interview.html')
+    interview_list = get_interview_list()
+    post=request.session.get('username')
+    html = template.render(locals())    
+    return HttpResponse(html)
+
+
+@csrf_exempt
+def set_judge(request):
+    if request.is_ajax():
+        team_name = request.POST.get('team_name')
+        Team.objects.filter(name=team_name).first().delete()
+        info = "已删除队伍\"" + str(team_name) + "\""
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
+
+@csrf_exempt
+def new_interview(request):
+    if request.is_ajax():
+        print(request.body)
+        json_data=json.loads(request.body.decode('utf-8'))
+        print(json_data)
+        print(json_data['team'])
+        print(json_data['temp_list'])
+        print(type(json_data['temp_list']))
+        Interview.objects.create(team=json_data['team'],
+                                date=json_data['date'],
+                                location=json_data['location'],
+                                start_time=json_data['start_time'],
+                                end_time=json_data['end_time'],
+                                judge_list=json_data['temp_list'],
+                                remarks=json_data['remarks'])
+        # info = "lalala"
+        info = "已建立面试 \"" + str(request.body.decode('utf-8'))
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
