@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'.+\/modify_info/', myblog.views.modify_info),
     url(r'.+\/manage_info/', myblog.views.get_student_info),
     url(r'.+\/new_interview/', myblog.views.new_interview),
-
+    url(r'.+\/del_interview/', myblog.views.del_interview),
 
     url(r'homepage/(.+)',  myblog.views.homepage_deal),
     # path('homepage/left.html', myblog.views.homepage_deal),
