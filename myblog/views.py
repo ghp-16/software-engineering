@@ -283,8 +283,8 @@ def get_employee(person_number):
     all_people_list = Employee.objects.all()
     for i in all_people_list:
         if(i.number==person_number):
-            return i
             print("i get number:"+number)
+            return i
     
 
 #-------------------------------manage_student.html---------------------
