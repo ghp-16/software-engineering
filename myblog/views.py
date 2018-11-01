@@ -195,14 +195,19 @@ def index(request):
                 post = "请输入密码"
             else:
                 checkcode = hashlib.md5(user_password.encode("utf-8")).hexdigest()
-                print(checkcode)
-                print("\n")
-                print(correct_password)
                 if checkcode == correct_password:
                     request.session['account']=user_number
                     request.session['username']=correct_name
+                    request.session['usertype']=i.types
                     post = "登陆成功"
-                    return HttpResponseRedirect('/homepage/main.html')
+                    if i.types=="student":
+                        return HttpResponseRedirect('/homepage/main.html')
+                    if i.types=="judge":
+                        return HttpResponseRedirect('/homepage/main_judge.html')
+                    if i.types=="team_manager":
+                        return HttpResponseRedirect('/homepage/main_team.html')
+                    if i.types=="web_manager":
+                        return HttpResponseRedirect('/homepage/main_web.html')
                 else:
                     post = "密码错误"
     html = template.render(locals())
@@ -214,6 +219,19 @@ def homepage(request):
     html = template.render(locals())
     return HttpResponse(html)
 
+
+def homepage_info(request):
+    post = request.session.get('username')
+    if request.session.get('usertype')=="student":
+        template = get_template('left.html')
+    elif request.session.get('usertype')=="judge":
+        template = get_template('left_judge.html')
+    elif request.session.get('usertype')=="team_manager":
+        template = get_template('left_team.html')
+    else:
+        template = get_template('left_web.html')
+    html = template.render(locals())
+    return HttpResponse(html)
 
 def homepage_deal(request, url):
     template = get_template(url)
@@ -323,6 +341,7 @@ def del_mem(request):
 def set_student(request):
     if request.is_ajax():
         Member_num = request.POST.get('Member_num')
+        print(Member_num)
         Type = request.POST.get('set_type')
         # Mem = get_employee(Member_num)
         # Mem.update(number=str(Member_num))
