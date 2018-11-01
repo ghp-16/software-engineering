@@ -328,20 +328,7 @@ def manage_type(request):
     html = template.render(locals())
     return HttpResponse(html)
 
-def manage_send_txt(request):
-    template = get_template('send_txt.html')
-    msg = ""
-    order = ""
-    dict = request.POST
-    mylist = get_people_list()
-    # for i in dict:
-    #     if "add" in i:
-    #         order = "add"
-    #         Team.objects.create(name=request.POST['team_name'], captain="暂无")
-    #         mylist = get_team_list()
-    # post = "order is " + order
-    html = template.render(locals())
-    return HttpResponse(html)
+
 
 @csrf_exempt
 def del_mem(request):
@@ -594,3 +581,45 @@ def del_interview(request):
         return response
 
 
+#-------------------------------send_txt.html---------------------
+
+def manage_send_txt(request):
+    template = get_template('send_txt.html')
+    msg = ""
+    order = ""
+    dict = request.POST
+    mylist = get_people_list()
+    # for i in dict:
+    #     if "add" in i:
+    #         order = "add"
+    #         Team.objects.create(name=request.POST['team_name'], captain="暂无")
+    #         mylist = get_team_list()
+    # post = "order is " + order
+    html = template.render(locals())
+    return HttpResponse(html)
+
+@csrf_exempt
+def send_txt(request):
+    if request.is_ajax():
+        Member_name = request.POST.get('Member_name')
+        txt = request.POST.get('txt')
+        Mem = Employee.objects.get(name = Member_name)
+        if txt != "":
+            if Mem.txted=="":
+                list1=[]
+            else:
+                list1 = Mem.txted.split("++++")
+            list1.append(txt)
+            if len(list1)>10:
+                list1.pop(0)
+
+            Mem.txted = "++++".join(list1)
+            Mem.save()
+            info = "发送成功"
+            gg=0
+        else:
+            info = "推文内容不能为空"
+            gg=1
+        #document.getElementById('tui').value="txt"
+        response = HttpResponse(json.dumps({"info": info, "gg":gg}))
+        return response

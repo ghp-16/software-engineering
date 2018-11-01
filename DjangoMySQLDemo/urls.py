@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'.+\/getChoose/',myblog.views.get_choose),
     url(r'.+\/modify_info/', myblog.views.modify_info),
     url(r'.+\/manage_info/', myblog.views.get_student_info),
-    #url(r'.+\/send_txt/',myblog.views.send_txt),
+    url(r'.+\/send_txt/',myblog.views.send_txt),
     url(r'.+\/new_interview/', myblog.views.new_interview),
     url(r'.+\/del_interview/', myblog.views.del_interview),
     url(r'.+\/left.html', myblog.views.homepage_info),
