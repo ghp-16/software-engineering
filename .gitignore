@@ -19,4 +19,3 @@ coverage-reports/
 xunit-reports/
 
 **/.DS_Store
-*.sqlite3
