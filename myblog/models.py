@@ -11,7 +11,7 @@ class Employee(models.Model):
     major = models.CharField(max_length=15, default="计算机系")
     grade = models.CharField(max_length=5, default="大一")
     txted = models.CharField(max_length=4000, default="无")
-    choose = ListField(default ="wu")
+    choose = ListField(default ="")
     def __str__(self):
         return "%s " % self.choose
 
