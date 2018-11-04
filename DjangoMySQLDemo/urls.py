@@ -25,6 +25,7 @@ urlpatterns = [
     path('', myblog.views.index),
     path('index.html', myblog.views.index),
     path('tsinghua/', myblog.views.login_tsinghua),
+    path('tsinghua_login/', myblog.views.tsinghua),
     path('homepage/manage_student.html', myblog.views.manage_type),
     path('homepage/manage_team.html', myblog.views.manage_team),
     path('homepage/interview_edit.html', myblog.views.interview_edit),
