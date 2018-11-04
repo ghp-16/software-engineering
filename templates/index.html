@@ -43,9 +43,10 @@
                     'password': password.value,},
               dataType: 'json',
               success: function (data) {
-                  {#alert("发送成功");#}
                   alert(data['msg']);
-                  window.location.href="/homepage/main.html";
+                  if(data['msg'].indexOf("你好") != -1) {
+                      window.location.href = "/homepage/main.html";
+                  }
               },
               error: function (XMLHttpRequest, textStatus, errorThrown) {
                     // 状态码
