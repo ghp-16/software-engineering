@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 import urllib.request
 import urllib.parse
+import http.cookiejar
 
 
 @csrf_exempt
@@ -128,7 +129,7 @@ def test(request):
 
 def save(number, name, password, phone, mail):
     checkcode = hashlib.md5(password.encode("utf-8")).hexdigest()
-    Employee.objects.create(number=number, name=name, password=checkcode, phone_number=phone, mail=mail,types="student")
+    Employee.objects.create(number=number, name=name, password=checkcode, phone_number=phone, mail=mail,types="team_manager")
 
 
 def query(request):
@@ -234,6 +235,7 @@ def homepage_info(request):
     return HttpResponse(html)
 
 def homepage_deal(request, url):
+    post = request.session.get('username')
     template = get_template(url)
     html = template.render(locals())
     return HttpResponse(html)
@@ -259,6 +261,33 @@ def reset(request):
 
 @csrf_exempt
 def login_tsinghua(request):
+    # user_name = request.POST.get('account')
+    # password = request.POST.get('password')
+    # my_arguments = urllib.parse.urlencode({'userid': user_name,
+    #                                        'userpass': password}).encode(encoding='UTF-8')
+    # learn_tsinghua_url = 'https://learn.tsinghua.edu.cn/MultiLanguage/lesson/teacher/loginteacher.jsp'
+    # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0', }
+    # my_request = urllib.request.Request(url=learn_tsinghua_url,
+    #                                     headers=headers,
+    #                                     data=my_arguments,
+    #                                     method='POST')
+    # login_result = urllib.request.urlopen(my_request).read().decode('UTF-8')
+    # post = ""
+    # login = False
+    # if login_result.find('用户名或密码错误') != -1:
+    #     post = '用户名或密码错误，登录失败'
+    # elif login_result.find('没有登陆网络学堂的权限') != -1:
+    #     post = '您没有登陆权限！请确认是清华教工或学生！'
+    # else:
+    #     post = '验证成功'
+    #     login = True
+    # print(login_result)
+    template = get_template('index.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+@csrf_exempt
+def tsinghua(request):
     user_name = request.POST.get('account')
     password = request.POST.get('password')
     my_arguments = urllib.parse.urlencode({'userid': user_name,
@@ -270,18 +299,66 @@ def login_tsinghua(request):
                                         data=my_arguments,
                                         method='POST')
     login_result = urllib.request.urlopen(my_request).read().decode('UTF-8')
-    post = ""
+    msg = ""
     if login_result.find('用户名或密码错误') != -1:
-        post = '用户名或密码错误，登录失败'
+        msg = '用户名或密码错误，登录失败'
     elif login_result.find('没有登陆网络学堂的权限') != -1:
-        post = '您没有登陆权限！请确认是清华教工或学生！'
+        msg = '您没有登陆权限！请确认是清华教工或学生！'
     else:
-        post = '验证成功'
-    #print(login_result)
-    template = get_template('index.html')
-    html = template.render(locals())
+        cookie = http.cookiejar.CookieJar()
+        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cookie))
 
-    return HttpResponse(html)
+        resp = opener.open(my_request)
+        url = "http://learn.tsinghua.edu.cn/MultiLanguage/lesson/student/mainstudent.jsp"
+        req = urllib.request.Request(url, headers=headers)
+        resp = opener.open(req)
+
+        url = "http://learn.tsinghua.edu.cn/MultiLanguage/vspace/vspace_userinfo1.jsp"
+        req = urllib.request.Request(url, headers=headers)
+        resp = opener.open(req)
+
+        user_info = resp.read().decode('utf-8')
+
+        p = r'tr_l2[^>]+>(.+)</td>'
+        pattern = re.compile(p)
+        username = pattern.findall(user_info)[0]
+        # print(username + '同学，你好')
+
+        p_student = r'tr_l[^>]+>(.+)</td>'
+        pattern_student = re.compile(p_student)
+        student_number = pattern_student.findall(user_info)[0]
+        # print('你的学号：' + student_number)
+
+        p_id = r'id_card[^>]+>(.+)</td>'
+        pattern_id = re.compile(p_id)
+        id_card = pattern_id.findall(user_info)[0]
+        # print('你的身份证号：' + id_card)
+
+        p_folk = r'folk[^>]+>(.+)</td>'
+        pattern_folk = re.compile(p_folk)
+        folk = pattern_folk.findall(user_info)[0]
+        # print('你的民族：' + folk)
+
+        p_zzmm = r'zzmm[^>]+>(.+)</td>'
+        pattern_zzmm = re.compile(p_zzmm)
+        zzmm = pattern_zzmm.findall(user_info)[0]
+        print('政治面貌：' + zzmm)
+
+        p_email = r'email[^>]+>(.+)</td>'
+        pattern_email = re.compile(p_email)
+        email = pattern_email.findall(user_info)[0]
+        # print('你的邮箱：' + email)
+        request.session['account'] = user_name
+        request.session['username'] = username
+        request.session['student_number'] = student_number
+        request.session['id_card'] = id_card
+        request.session['folk'] = folk
+        request.session['zzmm'] = zzmm
+        request.session['email'] = email
+        msg = username + '同学，你好！即将跳转至主界面。'
+
+    response = HttpResponse(json.dumps({"msg": msg}))
+    return response
 #-------------------------------get model fuction---------------------
 def get_people_list():
     mylist = []
@@ -327,8 +404,6 @@ def manage_type(request):
             mylist = get_people_list()
     html = template.render(locals())
     return HttpResponse(html)
-
-
 
 @csrf_exempt
 def del_mem(request):
@@ -579,7 +654,6 @@ def del_interview(request):
         info = "已删除面试 \"" + str(request.body.decode('utf-8'))
         response = HttpResponse(json.dumps({"info": info}))
         return response
-
 
 #-------------------------------send_txt.html---------------------
 
