@@ -22,8 +22,9 @@ from django.contrib import staticfiles
 
 urlpatterns = [
     #________________page link ______________   
-    path('', myblog.views.index),
-    path('index.html', myblog.views.index),
+    path('', myblog.views.login_tsinghua),
+    # path('index.html', myblog.views.index),
+    path('index.html', myblog.views.login_tsinghua),
     path('tsinghua/', myblog.views.login_tsinghua),
     path('tsinghua_login/', myblog.views.tsinghua),
     path('homepage/manage_student.html', myblog.views.manage_type),

@@ -261,27 +261,6 @@ def reset(request):
 
 @csrf_exempt
 def login_tsinghua(request):
-    # user_name = request.POST.get('account')
-    # password = request.POST.get('password')
-    # my_arguments = urllib.parse.urlencode({'userid': user_name,
-    #                                        'userpass': password}).encode(encoding='UTF-8')
-    # learn_tsinghua_url = 'https://learn.tsinghua.edu.cn/MultiLanguage/lesson/teacher/loginteacher.jsp'
-    # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0', }
-    # my_request = urllib.request.Request(url=learn_tsinghua_url,
-    #                                     headers=headers,
-    #                                     data=my_arguments,
-    #                                     method='POST')
-    # login_result = urllib.request.urlopen(my_request).read().decode('UTF-8')
-    # post = ""
-    # login = False
-    # if login_result.find('用户名或密码错误') != -1:
-    #     post = '用户名或密码错误，登录失败'
-    # elif login_result.find('没有登陆网络学堂的权限') != -1:
-    #     post = '您没有登陆权限！请确认是清华教工或学生！'
-    # else:
-    #     post = '验证成功'
-    #     login = True
-    # print(login_result)
     template = get_template('index.html')
     html = template.render(locals())
     return HttpResponse(html)
@@ -300,6 +279,7 @@ def tsinghua(request):
                                         method='POST')
     login_result = urllib.request.urlopen(my_request).read().decode('UTF-8')
     msg = ""
+    query_msg = ""
     if login_result.find('用户名或密码错误') != -1:
         msg = '用户名或密码错误，登录失败'
     elif login_result.find('没有登陆网络学堂的权限') != -1:
@@ -342,7 +322,7 @@ def tsinghua(request):
         p_zzmm = r'zzmm[^>]+>(.+)</td>'
         pattern_zzmm = re.compile(p_zzmm)
         zzmm = pattern_zzmm.findall(user_info)[0]
-        print('政治面貌：' + zzmm)
+        # print('政治面貌：' + zzmm)
 
         p_email = r'email[^>]+>(.+)</td>'
         pattern_email = re.compile(p_email)
@@ -356,9 +336,28 @@ def tsinghua(request):
         request.session['zzmm'] = zzmm
         request.session['email'] = email
         msg = username + '同学，你好！即将跳转至主界面。'
+        if not query_student(student_number):
+            query_msg = "第一次登陆，请稍后修改个人信息！"
+            Employee.objects.create(name=username, mail=email, number=student_number)
 
-    response = HttpResponse(json.dumps({"msg": msg}))
+    response = HttpResponse(json.dumps({"msg": msg,
+                                        "query_msg": query_msg}))
     return response
+
+
+def query_student(student_number):
+    mylist = Employee.objects.all()
+    post = "查询结果："
+    is_exist = False
+    if student_number == "":
+        is_exist = False
+    else:
+        for i in mylist:
+            if student_number == i.number:
+                is_exist = True
+                break
+    return is_exist
+
 #-------------------------------get model fuction---------------------
 def get_people_list():
     mylist = []
