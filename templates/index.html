@@ -45,6 +45,9 @@
               success: function (data) {
                   alert(data['msg']);
                   if(data['msg'].indexOf("你好") != -1) {
+                      if(data['query_msg'].indexOf("第一次") != -1) {
+                          alert(data['query_msg']);
+                      }
                       window.location.href = "/homepage/main.html";
                   }
               },

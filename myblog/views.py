@@ -279,6 +279,7 @@ def tsinghua(request):
                                         method='POST')
     login_result = urllib.request.urlopen(my_request).read().decode('UTF-8')
     msg = ""
+    query_msg = ""
     if login_result.find('用户名或密码错误') != -1:
         msg = '用户名或密码错误，登录失败'
     elif login_result.find('没有登陆网络学堂的权限') != -1:
@@ -335,9 +336,28 @@ def tsinghua(request):
         request.session['zzmm'] = zzmm
         request.session['email'] = email
         msg = username + '同学，你好！即将跳转至主界面。'
+        if not query_student(student_number):
+            query_msg = "第一次登陆，请稍后修改个人信息！"
+            Employee.objects.create(name=username, mail=email, number=student_number)
 
-    response = HttpResponse(json.dumps({"msg": msg}))
+    response = HttpResponse(json.dumps({"msg": msg,
+                                        "query_msg": query_msg}))
     return response
+
+
+def query_student(student_number):
+    mylist = Employee.objects.all()
+    post = "查询结果："
+    is_exist = False
+    if student_number == "":
+        is_exist = False
+    else:
+        for i in mylist:
+            if student_number == i.number:
+                is_exist = True
+                break
+    return is_exist
+
 #-------------------------------get model fuction---------------------
 def get_people_list():
     mylist = []
