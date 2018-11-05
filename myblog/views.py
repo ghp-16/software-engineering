@@ -654,4 +654,19 @@ def del_interview(request):
         response = HttpResponse(json.dumps({"info": info}))
         return response
 
+#-------------------------------send_txt.html---------------------
 
+def manage_send_txt(request):
+    template = get_template('send_txt.html')
+    msg = ""
+    order = ""
+    dict = request.POST
+    mylist = get_people_list()
+    # for i in dict:
+    #     if "add" in i:
+    #         order = "add"
+    #         Team.objects.create(name=request.POST['team_name'], captain="暂无")
+    #         mylist = get_team_list()
+    # post = "order is " + order
+    html = template.render(locals())
+    return HttpResponse(html)
