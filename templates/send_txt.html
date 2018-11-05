@@ -1,0 +1,173 @@
+<html>
+   <head>
+      <title>Bootstrap 模板</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- 引入 Bootstrap -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+      <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+      <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+      <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+      
+    </head>
+
+    <body onload="creatTab()">
+
+        <center>
+
+        
+            <center>
+        <div id="just_title" class="just_title"><h1 >请输入推文内容（不超过300字）</h1></div>
+      <style>
+textarea
+{
+width:50%;
+height:50%;
+resize:none;
+
+}
+</style>
+<textarea maxlength="300" name="textarea" id = "tui"></textarea>
+</center>
+            {% csrf_token %}
+            <div class="container">
+                <td><button  onclick=suo(this)  id ="suo">可编辑</button></td>
+                <h2>发送对象</h2>
+                <!-- <div class="form-group">
+                    <label for="team_name">队名：</label>
+                    <input type="text" class="form-control" name="team_name"
+                        id="team_name" placeholder="请输入队名">
+                    <button type="submit" class="btn btn-success" name="add">增加队伍</button>
+                </div> -->
+                <div id="mytab"></div>
+            </div>
+        
+        </center>
+        <script type="text/javascript">
+            function suo(element){
+                var buttonValue= document.getElementById('suo').innerHTML;
+                if(buttonValue=="可编辑")
+                {
+                    
+                    document.getElementById("tui").readOnly=true;
+                    document.getElementById("suo").innerHTML="不可编辑";
+
+                }
+                else
+                {
+                    document.getElementById("tui").readOnly=false;
+                    document.getElementById("suo").innerHTML="可编辑";
+                }
+                
+
+            }
+            function creatTab(){
+                var mylist = {{ mylist|safe }}
+                var tab = '<table class="table"><thead><table class="table">\n' +
+                    '<thead>\n' +
+                    '<tr>\n' +
+                    '<th>#</th>\n' +
+                    '<th>姓名</th>\n' +
+                    '<th>学号</th>\n' +
+                    
+                    '</tr>\n' +
+                    '</thead>\n' +
+                    '<tbody>';
+                for(var i = 0; i <= mylist.length; i++){
+                    if(i==mylist.length)
+                    {
+                        tab += '<tr>';
+                    tab += "<td></td>";
+                    tab += "<td></td>";
+                    tab += "<td></td>"
+                    
+                    tab += "<td><button class=\"btn btn-warning\" name=\"student"
+                                + String(i) + "\" onclick=\"send(this)\" id = \"refresh\">发送完毕</button></td>";
+                    
+                    tab += '</tr>';
+                    }
+                    else
+                    {
+                        tab += '<tr>';
+                        tab += "<td>" + String(i+1) + "</td>";
+                        tab += "<td><label id=\"member" + String(i) + "\">" + String(mylist[i]['name']) + "</label></td>";
+                        tab += "<td>" + String(mylist[i]['number']) + "</td>"
+                    
+                        tab += "<td><button class=\"btn btn-warning\" name=\"student"
+                                + String(i) + "\" onclick=\"send(this)\" id = \"sendbutton" + String(i) +"\">发送</button></td>";
+                    
+                        tab += '</tr>';
+                    }
+                    
+                }
+                tab += '</tbody>';
+                tab += '</table>';
+                div1 = document.getElementById('mytab');
+                div1.innerHTML=tab;
+            }
+
+            function send(element) {
+                
+                
+                if(element.id=="refresh")
+                {
+                    location.reload();
+                    document.getElementById('tui').value = ""; 
+                }
+                else
+                {
+                     str =  "member" +  element.name.substring(7);
+                
+                var   $textArea = $('#tui')
+                txt   = String($textArea.val())
+                // alert(type);
+
+                // str = "member" + element_name.slice();
+                // alert(str);
+                mytext = $("#"+str).text();
+                //$("#tui").text("AAA");
+                //alert(mytext);
+                $.ajax({
+                    type: 'POST',
+                    data: {'Member_name':mytext,'txt':txt},//json
+                    {#contentType: 'application/json',#}
+                    dataType: 'json',
+                    //async: 'false',
+                    url: 'send_txt/',
+                    success: function (data) {
+                        $("#tui").val(txt);
+                        if(data['gg']==0)
+                        {
+                            document.getElementById("tui").readOnly=true;
+                            document.getElementById("suo").innerHTML="不可编辑";  
+                            var stamp = document.getElementById(element.id);//设置盖章按钮为不可用 
+                            stamp.disabled=true;
+                        }
+                        alert(data['info']);
+                        
+                        
+                    },
+                    error: function (e) {
+                        
+                        //alert(String(e)+"发送失败");
+                    }
+
+
+                });
+                //return false;
+                //$("#tui").val("AAA");
+                }
+               
+            }
+            
+        </script>
+
+      <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <!-- 包括所有已编译的插件 -->
+      <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+   </body>
+</html>

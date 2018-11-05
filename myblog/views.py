@@ -11,7 +11,6 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 import urllib.request
 import urllib.parse
-import http.cookiejar
 
 
 @csrf_exempt
@@ -235,7 +234,6 @@ def homepage_info(request):
     return HttpResponse(html)
 
 def homepage_deal(request, url):
-    post = request.session.get('username')
     template = get_template(url)
     html = template.render(locals())
     return HttpResponse(html)
@@ -261,33 +259,6 @@ def reset(request):
 
 @csrf_exempt
 def login_tsinghua(request):
-    # user_name = request.POST.get('account')
-    # password = request.POST.get('password')
-    # my_arguments = urllib.parse.urlencode({'userid': user_name,
-    #                                        'userpass': password}).encode(encoding='UTF-8')
-    # learn_tsinghua_url = 'https://learn.tsinghua.edu.cn/MultiLanguage/lesson/teacher/loginteacher.jsp'
-    # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0', }
-    # my_request = urllib.request.Request(url=learn_tsinghua_url,
-    #                                     headers=headers,
-    #                                     data=my_arguments,
-    #                                     method='POST')
-    # login_result = urllib.request.urlopen(my_request).read().decode('UTF-8')
-    # post = ""
-    # login = False
-    # if login_result.find('用户名或密码错误') != -1:
-    #     post = '用户名或密码错误，登录失败'
-    # elif login_result.find('没有登陆网络学堂的权限') != -1:
-    #     post = '您没有登陆权限！请确认是清华教工或学生！'
-    # else:
-    #     post = '验证成功'
-    #     login = True
-    # print(login_result)
-    template = get_template('index.html')
-    html = template.render(locals())
-    return HttpResponse(html)
-
-@csrf_exempt
-def tsinghua(request):
     user_name = request.POST.get('account')
     password = request.POST.get('password')
     my_arguments = urllib.parse.urlencode({'userid': user_name,
@@ -299,66 +270,18 @@ def tsinghua(request):
                                         data=my_arguments,
                                         method='POST')
     login_result = urllib.request.urlopen(my_request).read().decode('UTF-8')
-    msg = ""
+    post = ""
     if login_result.find('用户名或密码错误') != -1:
-        msg = '用户名或密码错误，登录失败'
+        post = '用户名或密码错误，登录失败'
     elif login_result.find('没有登陆网络学堂的权限') != -1:
-        msg = '您没有登陆权限！请确认是清华教工或学生！'
+        post = '您没有登陆权限！请确认是清华教工或学生！'
     else:
-        cookie = http.cookiejar.CookieJar()
-        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cookie))
+        post = '验证成功'
+    #print(login_result)
+    template = get_template('index.html')
+    html = template.render(locals())
 
-        resp = opener.open(my_request)
-        url = "http://learn.tsinghua.edu.cn/MultiLanguage/lesson/student/mainstudent.jsp"
-        req = urllib.request.Request(url, headers=headers)
-        resp = opener.open(req)
-
-        url = "http://learn.tsinghua.edu.cn/MultiLanguage/vspace/vspace_userinfo1.jsp"
-        req = urllib.request.Request(url, headers=headers)
-        resp = opener.open(req)
-
-        user_info = resp.read().decode('utf-8')
-
-        p = r'tr_l2[^>]+>(.+)</td>'
-        pattern = re.compile(p)
-        username = pattern.findall(user_info)[0]
-        # print(username + '同学，你好')
-
-        p_student = r'tr_l[^>]+>(.+)</td>'
-        pattern_student = re.compile(p_student)
-        student_number = pattern_student.findall(user_info)[0]
-        # print('你的学号：' + student_number)
-
-        p_id = r'id_card[^>]+>(.+)</td>'
-        pattern_id = re.compile(p_id)
-        id_card = pattern_id.findall(user_info)[0]
-        # print('你的身份证号：' + id_card)
-
-        p_folk = r'folk[^>]+>(.+)</td>'
-        pattern_folk = re.compile(p_folk)
-        folk = pattern_folk.findall(user_info)[0]
-        # print('你的民族：' + folk)
-
-        p_zzmm = r'zzmm[^>]+>(.+)</td>'
-        pattern_zzmm = re.compile(p_zzmm)
-        zzmm = pattern_zzmm.findall(user_info)[0]
-        print('政治面貌：' + zzmm)
-
-        p_email = r'email[^>]+>(.+)</td>'
-        pattern_email = re.compile(p_email)
-        email = pattern_email.findall(user_info)[0]
-        # print('你的邮箱：' + email)
-        request.session['account'] = user_name
-        request.session['username'] = username
-        request.session['student_number'] = student_number
-        request.session['id_card'] = id_card
-        request.session['folk'] = folk
-        request.session['zzmm'] = zzmm
-        request.session['email'] = email
-        msg = username + '同学，你好！即将跳转至主界面。'
-
-    response = HttpResponse(json.dumps({"msg": msg}))
-    return response
+    return HttpResponse(html)
 #-------------------------------get model fuction---------------------
 def get_people_list():
     mylist = []
@@ -404,6 +327,8 @@ def manage_type(request):
             mylist = get_people_list()
     html = template.render(locals())
     return HttpResponse(html)
+
+
 
 @csrf_exempt
 def del_mem(request):
@@ -656,3 +581,45 @@ def del_interview(request):
         return response
 
 
+#-------------------------------send_txt.html---------------------
+
+def manage_send_txt(request):
+    template = get_template('send_txt.html')
+    msg = ""
+    order = ""
+    dict = request.POST
+    mylist = get_people_list()
+    # for i in dict:
+    #     if "add" in i:
+    #         order = "add"
+    #         Team.objects.create(name=request.POST['team_name'], captain="暂无")
+    #         mylist = get_team_list()
+    # post = "order is " + order
+    html = template.render(locals())
+    return HttpResponse(html)
+
+@csrf_exempt
+def send_txt(request):
+    if request.is_ajax():
+        Member_name = request.POST.get('Member_name')
+        txt = request.POST.get('txt')
+        Mem = Employee.objects.get(name = Member_name)
+        if txt != "":
+            if Mem.txted=="":
+                list1=[]
+            else:
+                list1 = Mem.txted.split("++++")
+            list1.append(txt)
+            if len(list1)>10:
+                list1.pop(0)
+
+            Mem.txted = "++++".join(list1)
+            Mem.save()
+            info = "发送成功"
+            gg=0
+        else:
+            info = "推文内容不能为空"
+            gg=1
+        #document.getElementById('tui').value="txt"
+        response = HttpResponse(json.dumps({"info": info, "gg":gg}))
+        return response
