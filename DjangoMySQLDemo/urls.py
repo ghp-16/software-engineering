@@ -32,6 +32,7 @@ urlpatterns = [
     path('homepage/interview_edit.html', myblog.views.interview_edit),
     path('homepage/manage_interview.html', myblog.views.manage_interview),
     path('homepage/send_txt.html', myblog.views.manage_send_txt),
+    path('homepage/notice.html', myblog.views.manage_notice),
     # path('index.html', myblog.views.login_tsinghua),
     path('test/', myblog.views.test),
     # path('query/', myblog.views.query),
