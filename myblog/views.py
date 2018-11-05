@@ -717,3 +717,19 @@ def manage_notice(request):
     # post = "order is " + order
     html = template.render(locals())
     return HttpResponse(html)
+
+@csrf_exempt
+def notice(request):
+    if request.is_ajax():
+        hao = int(request.POST.get('idd'))
+        post=request.session.get('username')
+        Mem = Employee.objects.get(name = post)
+        list1 = Mem.txted.split("++++")
+        list1.pop(hao)
+        print(len(list1))
+        Mem.txted = "++++".join(list1)
+        Mem.save()
+        #document.getElementById('tui').value="txt"
+        info=""
+        response = HttpResponse(json.dumps({"info": info }))
+        return response

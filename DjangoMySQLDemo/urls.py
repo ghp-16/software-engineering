@@ -51,6 +51,8 @@ urlpatterns = [
     url(r'.+\/manage_info/', myblog.views.get_student_info),
     url(r'.+\/new_interview/', myblog.views.new_interview),
     url(r'.+\/del_interview/', myblog.views.del_interview),
+    url(r'.+\/notice/',myblog.views.notice),
+    url(r'.+\/send_txt/',myblog.views.send_txt),
     url(r'.+\/left.html', myblog.views.homepage_info),
     url(r'.+\/left_team.html', myblog.views.homepage_info),
     url(r'.+\/left_judge.html', myblog.views.homepage_info),

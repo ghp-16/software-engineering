@@ -44,23 +44,7 @@ width: 800px;
         
         </center>
         <script type="text/javascript">
-            function suo(element){
-                var buttonValue= document.getElementById('suo').innerHTML;
-                if(buttonValue=="可编辑")
-                {
-                    
-                    document.getElementById("tui").readOnly=true;
-                    document.getElementById("suo").innerHTML="不可编辑";
-
-                }
-                else
-                {
-                    document.getElementById("tui").readOnly=false;
-                    document.getElementById("suo").innerHTML="可编辑";
-                }
-                
-
-            }
+            
             function creatTab(){
                 var mylist = {{ mylist|safe }}
                 if (mylist.length==0)
