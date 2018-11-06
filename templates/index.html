@@ -48,7 +48,18 @@
                       if(data['query_msg'].indexOf("第一次") != -1) {
                           alert(data['query_msg']);
                       }
-                      window.location.href = "/homepage/main.html";
+                      if(data['type'].indexOf("student") != -1){
+                          window.location.href = "/homepage/main.html";
+                      }
+                      else if (data['type'].indexOf("judge") != -1){
+                          window.location.href = "/homepage/main_judge.html";
+                      }
+                      else if (data['type'].indexOf("team_manager") != -1){
+                          window.location.href = "/homepage/main_team.html";
+                      }
+                      else if (data['type'].indexOf("web_manager") != -1){
+                          window.location.href = "/homepage/main_web.html";
+                      }
                   }
               },
               error: function (XMLHttpRequest, textStatus, errorThrown) {
