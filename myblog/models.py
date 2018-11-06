@@ -27,6 +27,4 @@ class Interview(models.Model):
     end_time = models.CharField(max_length=32 , default="11:25:00 AM")
     location = models.CharField(max_length=32 , default="蒙民伟楼") 
     remarks = models.CharField(max_length=600 , default="多喝热水") 
-    judge_list = ListField()
-    def __str__(self):
-        return "%s " % self.judge_list
+    judge_list = models.CharField(max_length=4000, default="无")

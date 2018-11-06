@@ -387,6 +387,14 @@ def get_interview_list():
     all_interview_list = Interview.objects.all()
     for i in all_interview_list:
          mylist.append(model_to_dict(i))
+    for i in mylist:
+        list1=i['judge_list'].split("++++")
+        i['judge_list']=""
+        list3=[]
+        for j in list1:
+            list2=j.split(" ")
+            list3.append(list2[1])
+        i['judge_list']=" ".join(list3)
     return mylist
 
 def get_employee(person_number):
@@ -629,12 +637,17 @@ def new_interview(request):
         print(json_data['team'])
         print(json_data['temp_list'])
         print(type(json_data['temp_list']))
+        list1=json_data['temp_list']
+        aa=[]
+        for i in list1:
+            aa.append(i['number']+" "+i['name']+" "+i['phone_number']+" "+i['mail'])
+        bb="++++".join(aa)
         Interview.objects.create(team=json_data['team'],
                                 date=json_data['date'],
                                 location=json_data['location'],
                                 start_time=json_data['start_time'],
                                 end_time=json_data['end_time'],
-                                judge_list=json_data['temp_list'],
+                                judge_list=bb,
                                 remarks=json_data['remarks'])
         # info = "lalala"
         info = "已建立面试 \"" + str(request.body.decode('utf-8'))
