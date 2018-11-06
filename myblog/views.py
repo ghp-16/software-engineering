@@ -367,6 +367,11 @@ def query_student(student_number, username):
                 break
     return is_exist
 
+@csrf_exempt
+def checkin(request):
+    template = get_template('checkin_index.html')
+    html = template.render(locals())
+    return HttpResponse(html)
 #-------------------------------get model fuction---------------------
 def get_people_list():
     mylist = []

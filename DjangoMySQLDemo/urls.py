@@ -26,6 +26,7 @@ urlpatterns = [
     # path('index.html', myblog.views.index),
     path('index.html', myblog.views.login_tsinghua),
     path('tsinghua/', myblog.views.login_tsinghua),
+    path('check_in/', myblog.views.checkin),
     path('tsinghua_login/', myblog.views.tsinghua),
     path('homepage/manage_student.html', myblog.views.manage_type),
     path('homepage/manage_team.html', myblog.views.manage_team),

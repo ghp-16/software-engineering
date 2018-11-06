@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/css/bootstrap-custom.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/css/bootstrap.css">
+
+{#    <link rel="stylesheet" type="text/css" href="/static/style.css">#}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+        <p style="text-align: center"><img src="/static/thu_logo.png"></p>
+        <div >
+            <div class="container">
+                <span class="space"></span>
+                <div class="jumbotron" style="background-color: #F3DCD4; border-radius:3%;">
+                    <h2>清华大学艺术团招新平台</h2>
+                    <h3 class="line"></h3>
+                    <h2 style="font-size: 140%;">请登陆</h2>
+                    <div class="space"></div>
+                    <form class="form-login" method="post" action="https://id.tsinghua.edu.cn/security_check">
+                        <div class="form-group">
+                            <input type="text" id="account" class="form-control" placeholder="用户名" autofocus="" name="account" required="">
+                            <span id="helpBlock" class="help-block"><span aria-hidden="true" class="glyphicon glyphicon-info-sign"></span> 在校师生使用证件号或用户名登录，新生使用已激活的用户名登录。</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" class="form-control" placeholder="密码" name="password" required="">
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="try_login()">
+                            登录
+                        </button>
+                    </form>
+                    <p>
+                        <a href="https://id.tsinghua.edu.cn/f/recovery/password/reset">忘记密码</a>
+                    </p>
+                </div>
+                <!-- .jumbotron -->
+
+            </div>
+            <!-- .container -->
+        </div>
+        <!-- .wrapper -->
+    <script>
+        function try_login() {
+            var account = document.getElementById('account');
+            var password = document.getElementById('password');
+            $.ajax({
+                type: 'POST',
+                url: '/tsinghua_login/',
+                data: {'account': account.value,
+                        'password': password.value,},
+                dataType: 'json',
+                success: function (data) {
+                    alert(data['msg']);
+                    if(data['msg'].indexOf("你好") != -1) {
+                        if(data['query_msg'].indexOf("第一次") != -1) {
+                            alert(data['query_msg']);
+                        }
+                        if(data['type'].indexOf("student") != -1){
+                            window.location.href = "/homepage/main.html";
+                        }
+                        else if (data['type'].indexOf("judge") != -1){
+                            window.location.href = "/homepage/main_judge.html";
+                        }
+                        else if (data['type'].indexOf("team_manager") != -1){
+                            window.location.href = "/homepage/main_team.html";
+                        }
+                        else if (data['type'].indexOf("web_manager") != -1){
+                            window.location.href = "/homepage/main_web.html";
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    // 状态码
+                    alert(XMLHttpRequest.status);
+                    // 状态
+                    alert(XMLHttpRequest.readyState);
+                    // 错误信息
+                    alert(textStatus);
+                }
+            });
+        }
+    </script>
+    <script src="/static/main.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

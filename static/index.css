@@ -1,0 +1,43 @@
+html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      font-family: Microsoft YaHei;
+      color: #580206;
+    }
+body {
+      background: #c17b7b url(/static/bg_index.jpg) no-repeat center top !important;
+      /*background-image: url("register_back.jpg");*/
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      text-align: center;
+    }
+h1{
+    font-size: 40px;
+    top:20%;
+}
+.line {
+  background: url(line.png);
+  height: 2px;
+}
+.form-login {
+  max-width: 400px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-login .form-login-heading,
+.form-login .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-login .form-control:focus {
+  z-index: 2;
+}
+.form-login input[type="password"] {
+  margin-bottom: 10px;
+}
