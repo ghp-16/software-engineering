@@ -695,3 +695,41 @@ def send_txt(request):
         #document.getElementById('tui').value="txt"
         response = HttpResponse(json.dumps({"info": info, "gg":gg}))
         return response
+
+#-------------------------------notice.html---------------------
+@csrf_exempt
+def manage_notice(request):
+    template = get_template('notice.html')
+    msg = ""
+    order = ""
+    dict = request.POST
+    post=request.session.get('username')
+    Mem = Employee.objects.get(name = post)
+    if Mem.txted=="":
+        mylist=[]
+    else:
+        mylist = Mem.txted.split("++++")
+    # for i in dict:
+    #     if "add" in i:
+    #         order = "add"
+    #         Team.objects.create(name=request.POST['team_name'], captain="暂无")
+    #         mylist = get_team_list()
+    # post = "order is " + order
+    html = template.render(locals())
+    return HttpResponse(html)
+
+@csrf_exempt
+def notice(request):
+    if request.is_ajax():
+        hao = int(request.POST.get('idd'))
+        post=request.session.get('username')
+        Mem = Employee.objects.get(name = post)
+        list1 = Mem.txted.split("++++")
+        list1.pop(hao)
+        print(len(list1))
+        Mem.txted = "++++".join(list1)
+        Mem.save()
+        #document.getElementById('tui').value="txt"
+        info=""
+        response = HttpResponse(json.dumps({"info": info }))
+        return response

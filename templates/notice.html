@@ -1,0 +1,139 @@
+<html>
+   <head>
+      <title>Bootstrap 模板</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- 引入 Bootstrap -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+      <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+      <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+      <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+      <style>
+textarea
+{
+
+resize:none;
+border: none;
+height:160px;
+width: 800px;
+}
+
+</style>
+    </head>
+
+    <body onload="creatTab()">
+
+        
+
+
+</center>
+            {% csrf_token %}
+            <div class="container">
+                
+                <!-- <div class="form-group">
+                    <label for="team_name">队名：</label>
+                    <input type="text" class="form-control" name="team_name"
+                        id="team_name" placeholder="请输入队名">
+                    <button type="submit" class="btn btn-success" name="add">增加队伍</button>
+                </div> -->
+                <div id="mytab" ></div>
+            </div>
+        
+        </center>
+        <script type="text/javascript">
+            
+            function creatTab(){
+                var mylist = {{ mylist|safe }}
+                if (mylist.length==0)
+                {
+                    
+                    var tab = "<td><label>无通知</label></td>";
+                    div1 = document.getElementById('mytab');
+                div1.innerHTML=tab;
+                }
+                else
+                {
+
+
+                var tab = '<table class="table"><thead><table class="table">\n' +
+                    '<thead>\n' +
+                    '<tr style="text-align:center;vertical-align:middle;">\n' +
+                    '<th></th>\n' +
+                    '<th></th>\n' +
+                    
+                    
+                    '</tr>\n' +
+                    '</thead>\n' +
+                    '<tbody>';
+                for(var i = 0; i < mylist.length; i++){
+                    
+                        tab += '<tr>';
+                        tab += "<td>" + String(i+1) + "</td>";
+                        var j = mylist.length;
+                        //tab += "<td><label id=\"member" + String(i) + "\">" + String(mylist[i]['name']) + "</label></td>";
+                        tab += "<td><textarea readOnly   id = \"tui" +"\">"+String(mylist[j-1-i])+"</textarea></td>";
+                    
+                        tab += "<td><button class=\"btn btn-warning\" name=\"student"
+                                + String(i) + "\" onclick=\"deletee(this)\" id = \"sendbutton" + String(i) +"\">删除</button></td>";
+                    
+                        tab += '</tr>';
+                    
+                    
+                }
+                tab += '</tbody>';
+                tab += '</table>';
+                div1 = document.getElementById('mytab');
+                div1.innerHTML=tab;
+            }
+            }
+
+            function deletee(element) {
+                
+                
+                
+                     str =    element.name.substring(7);
+                
+                //var   $textArea = $('#tui')
+                //txt   = String($textArea.val())
+                // alert(type);
+
+                // str = "member" + element_name.slice();
+                // alert(str);
+                //mytext = $("#"+str).text();
+                //$("#tui").text("AAA");
+                //alert(mytext);
+                $.ajax({
+                    type: 'POST',
+                    data: {'idd':str},//json
+                    {#contentType: 'application/json',#}
+                    dataType: 'json',
+                    //async: 'false',
+                    url: 'notice/',
+                    success: function (data) {
+                        alert("删除成功")
+                        location.reload();
+                    },
+                    error: function (e) {
+                        
+                        alert(String(e)+"删除失败");
+                    }
+
+
+                });
+                //return false;
+                //$("#tui").val("AAA");
+               
+               
+            }
+            
+        </script>
+
+      <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <!-- 包括所有已编译的插件 -->
+      <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+   </body>
+</html>
