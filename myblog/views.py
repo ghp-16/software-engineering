@@ -387,6 +387,14 @@ def get_interview_list():
     all_interview_list = Interview.objects.all()
     for i in all_interview_list:
          mylist.append(model_to_dict(i))
+    for i in mylist:
+        list1=i['judge_list'].split("++++")
+        i['judge_list']=""
+        list3=[]
+        for j in list1:
+            list2=j.split(" ")
+            list3.append(list2[1])
+        i['judge_list']=" ".join(list3)
     return mylist
 
 def get_employee(person_number):
@@ -426,13 +434,14 @@ def del_mem(request):
 def set_student(request):
     if request.is_ajax():
         Member_num = request.POST.get('Member_num')
-        print(Member_num)
+        
         Type = request.POST.get('set_type')
         # Mem = get_employee(Member_num)
         # Mem.update(number=str(Member_num))
         Mem = Employee.objects.get(number = Member_num)
         Mem.types = Type
         Mem.save()
+        print(Mem.types)
         info = "已将成员\"" + str(Member_num) + "\"类型改为"+Type+Mem.number
         response = HttpResponse(json.dumps({"info": info}))
         return response
@@ -472,18 +481,21 @@ def sign_up(request):
     # username=request.session.get('username')
     user_number=request.session.get('account')
     person_model = Employee.objects.get(number = user_number)
-    person = model_to_dict(person_model)
+    person=[]
+    if person_model.choose=="":
+        person=[]
+    else:
+        person = person_model.choose.split("++++")
 
     msg = ""
     order = ""
-    dict = request.POST
     mylist = get_team_list()
-    for i in dict:
-        if "add" in i:
-            order = "add"
-            Team.objects.create(name=request.POST['team_name'], captain="暂无")
-            mylist = get_team_list()
-    
+    i=0
+    while i<len(mylist):
+        if mylist[i]['name'] in person:
+            mylist.pop(i)
+            i=i-1
+        i=i+1
     html = template.render(locals())
     return HttpResponse(html)
 
@@ -493,7 +505,11 @@ def del_choose(request):
         person_num=request.session.get('account')
         team_name = int(request.POST.get('choose'))
         person = Employee.objects.get(number = person_num)
-        person.choose.pop(team_name)
+
+        
+        list1 = person.choose.split("++++")
+        list1.pop(team_name)
+        person.choose = "++++".join(list1)
         person.save()
         info = person_num+"已删除志愿\"" + str(team_name+1) + "\""
         response = HttpResponse(json.dumps({"info": info}))
@@ -505,9 +521,16 @@ def get_choose(request):
         person_num=request.session.get('account')
         team_name = request.POST.get('team_name')
         person = Employee.objects.get(number = person_num)
-        print("type is :"+str(type(person.choose)))
-        person.choose.append(team_name)
+        if person.choose=="":
+            list1=[]
+        else:
+            list1 = person.choose.split("++++")
+
+        list1.append(team_name)
+
+        person.choose = "++++".join(list1)
         person.save()
+
         info = person_num+"已设置队伍\"" + str(team_name) + "\"为志愿"
         response = HttpResponse(json.dumps({"info": info}))
         return response
@@ -614,12 +637,17 @@ def new_interview(request):
         print(json_data['team'])
         print(json_data['temp_list'])
         print(type(json_data['temp_list']))
+        list1=json_data['temp_list']
+        aa=[]
+        for i in list1:
+            aa.append(i['number']+" "+i['name']+" "+i['phone_number']+" "+i['mail'])
+        bb="++++".join(aa)
         Interview.objects.create(team=json_data['team'],
                                 date=json_data['date'],
                                 location=json_data['location'],
                                 start_time=json_data['start_time'],
                                 end_time=json_data['end_time'],
-                                judge_list=json_data['temp_list'],
+                                judge_list=bb,
                                 remarks=json_data['remarks'])
         # info = "lalala"
         info = "已建立面试 \"" + str(request.body.decode('utf-8'))

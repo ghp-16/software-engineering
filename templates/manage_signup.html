@@ -33,7 +33,7 @@
             function creatTab(){
                 var person = {{ person|safe }}
                 var mylist = {{ mylist|safe }}
-                var choose = person['choose'] 
+                
                 var tab = '<table class="table"><thead><table class="table">\n' +
                     '<h1>我的志愿</h1>'+
                     '<thead>\n' +
@@ -43,12 +43,12 @@
                     '</tr>\n' +
                     '</thead>\n' ;
 
-                    for(var i = 0; i < choose.length; i++){
+                    for(var i = 0; i < person.length; i++){
                     tab += '<tr>';
                     tab += "<td>" + String(i+1) + "</td>";
-                    tab += "<td><label>" + String(choose[i]) + "</label></td>";
+                    tab += "<td><label>" + String(person[i]) + "</label></td>";
                     tab += "<td><button class=\"btn btn-danger\" name=\"signup"
-                                + String(i) + "\" onclick=\"delChoose("+i+")\">删除</button></td>";
+                                + String(i) + "\" onclick=\"del_choose("+i+")\">删除</button></td>";
                     tab += '</tr>';
                     }
 
@@ -68,12 +68,13 @@
                     '</tr>\n' +
                     '</thead>\n' +
                     '<tbody>';
+                alert(mylist.length);
                 for(var i = 0; i < mylist.length; i++){
                     tab += '<tr>';
                     tab += "<td>" + String(i+1) + "</td>";
                     tab += "<td><label id=\"team" + String(i) + "\">" + String(mylist[i]['name']) + "</label></td>";
                     tab += "<td><button class=\"btn btn-success\" name=\"signup"
-                                + String(i) + "\" onclick=\"getChoose(this)\">报名</button></td>";
+                                + String(i) + "\" onclick=\"get_choose(this)\">报名</button></td>";
                     tab += '</tr>';
                 }
                 tab += '</tbody>';
@@ -82,36 +83,39 @@
                 div1.innerHTML=tab;
             }
 
-            function getChoose(element) {
+            function get_choose(element) {
                 var element_name = element.name;
                 str = "team" + element_name.substring(6);
                 mytext = $("#"+str).text();
-                alert(mytext)
+                
                 $.ajax({
                     type: 'POST',
                     data: {'team_name':mytext},//json
                     {#contentType: 'application/json',#}
                     dataType: 'json',
-                    url: 'getChoose/',
+                    url: 'get_choose/',
                     success: function (data) {
+                        //alert(mytext);
                         alert(data['info']);
+                        location.reload();
                     },
                     error: function (e) {
-                        alert("发送失败");
+                        //alert("发送失败");
                     }
                 });
             }
 
-            function delChoose(num) {
+            function del_choose(num) {
                 alert(num+1);
                 $.ajax({
                     type: 'POST',
                     data: {'choose':num},//json
                     {#contentType: 'application/json',#}
                     dataType: 'json',
-                    url: 'delChoose/',
+                    url: 'del_choose/',
                     success: function (data) {
-                        alert(data['info']);
+                        //alert(data['info']);
+                        location.reload();
                     },
                     error: function (e) {
                         alert("发送失败");
@@ -119,24 +123,24 @@
                 });
             }
 
-            function setChoose(element,num) {
-                var element_name = element.name;
-                str = "team" + element_name.substring(6);
-                mytext = $("#"+str).text();
-                $.ajax({
-                    type: 'POST',
-                    data: {'team_name':mytext, 'choose':num},//json
-                    {#contentType: 'application/json',#}
-                    dataType: 'json',
-                    url: 'setChoose/',
-                    success: function (data) {
-                        alert(data['info']);
-                    },
-                    error: function (e) {
-                        alert("发送失败");
-                    }
-                });
-            }
+            // function setChoose(element,num) {
+            //     var element_name = element.name;
+            //     str = "team" + element_name.substring(6);
+            //     mytext = $("#"+str).text();
+            //     $.ajax({
+            //         type: 'POST',
+            //         data: {'team_name':mytext, 'choose':num},//json
+            //         {#contentType: 'application/json',#}
+            //         dataType: 'json',
+            //         url: 'setChoose/',
+            //         success: function (data) {
+            //             alert(data['info']);
+            //         },
+            //         error: function (e) {
+            //             alert("发送失败");
+            //         }
+            //     });
+            // }
         </script>
 
       <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->

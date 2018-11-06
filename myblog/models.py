@@ -11,9 +11,8 @@ class Employee(models.Model):
     major = models.CharField(max_length=15, default="计算机系")
     grade = models.CharField(max_length=5, default="大一")
     txted = models.CharField(max_length=4000, default="无")
-    choose = ListField()
-    def __str__(self):
-        return "%s " % self.choose
+    choose = models.CharField(max_length=4000, default="无")
+    
 
 class Team(models.Model):
     name = models.CharField(max_length=10 , default="划水队")
@@ -28,6 +27,4 @@ class Interview(models.Model):
     end_time = models.CharField(max_length=32 , default="11:25:00 AM")
     location = models.CharField(max_length=32 , default="蒙民伟楼") 
     remarks = models.CharField(max_length=600 , default="多喝热水") 
-    judge_list = ListField()
-    def __str__(self):
-        return "%s " % self.judge_list
+    judge_list = models.CharField(max_length=4000, default="无")
