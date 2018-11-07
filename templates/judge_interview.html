@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body onload="creatTab()">
+    {% csrf_token %}
+    <div class="container" style="text-align: center">
+        <h1>二维码生成</h1>
+        <button class="btn btn-success" type="button" id="get_qrcode" onclick="get_qrcode()">点击生成签到二维码</button>
+        <div id="qrcode">
+        </div>
+    </div>
+    <hr style="height: 4px; color: #000;">
+    <div class="container" style="text-align: center">
+        <h1>面试人员名单</h1>
+        <div id="mytab">
+        </div>
+    </div>
+    <script>
+        function get_qrcode() {
+            jQuery.ajax({
+                type: 'POST',
+                data: {'url':'https://art-test-ac.app.secoder.net'},//json
+                dataType: 'json',
+                url: 'get_qrcode/',
+                success:function (msg) {
+                    jQuery("#qrcode").html("<img id='qrcodeImg' alt='二维码' width='235' height='235' class='animated rollIn'/><p><label style=\"\">请使用微信扫码签到</label></p>");
+                    jQuery("#qrcodeImg").attr("src",msg['path']);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    // 状态码
+                    alert(XMLHttpRequest.status);
+                    // 状态
+                    alert(XMLHttpRequest.readyState);
+                    // 错误信息
+                    alert(textStatus);
+                }
+            });
+        }
+        function creatTab(){
+                {#var mylist = {{ mylist|safe }};#}
+                var tab = '<table class="table"><thead><table class="table">\n' +
+                    '<thead>\n' +
+                    '<tr>\n' +
+                    '<th>#</th>\n' +
+                    '<th>姓名</th>\n' +
+                    '<th>学号</th>\n' +
+                    '</tr>\n' +
+                    '</thead>\n' +
+                    '<tbody>';
+                {#for(var i = 0; i < mylist.length; i++){#}
+                {#    tab += '<tr>';#}
+                {#    tab += "<td>" + String(i+1) + "</td>";#}
+                {#    tab += "<td><label id=\"team" + String(i) + "\">" + String(mylist[i]['name']) + "</label></td>";#}
+                {#    tab += "<td>" + String(mylist[i]['captain']) + "</td>"#}
+                {#    tab += "<td><button class=\"btn btn-danger\" name=\"sub"#}
+                {#                + String(i) + "\" onclick=\"delTeam(this)\">删除</button></td>";#}
+                {#    tab += '</tr>';}#}
+                tab += '</tbody>';
+                tab += '</table>';
+                div1 = document.getElementById('mytab');
+                div1.innerHTML=tab;
+            }
+    </script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

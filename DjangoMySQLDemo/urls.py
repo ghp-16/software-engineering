@@ -26,6 +26,7 @@ urlpatterns = [
     # path('index.html', myblog.views.index),
     path('index.html', myblog.views.login_tsinghua),
     path('tsinghua/', myblog.views.login_tsinghua),
+    path('check_in_index/', myblog.views.checkin),
     path('tsinghua_login/', myblog.views.tsinghua),
     path('homepage/manage_student.html', myblog.views.manage_type),
     path('homepage/manage_team.html', myblog.views.manage_team),
@@ -42,6 +43,7 @@ urlpatterns = [
     path('homepage/manage_signup.html', myblog.views.sign_up),
 
     #______________function link______________________
+    url(r'.+\/get_qrcode/',myblog.views.get_qrcode),
     url(r'.+\/set_student/',myblog.views.set_student),
     url(r'.+\/delMem/',myblog.views.del_mem),
     url(r'.+\/delteam/',myblog.views.del_team),
