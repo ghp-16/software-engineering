@@ -115,9 +115,6 @@
 
 
                                 <div class="form-group-separator"></div>
-                                <center>
-                                        <h2 class="panel-title">现有评委</h2>
-                                    </center>
                                 <script type="text/javascript">
                                 // var temp_list =  {{ judge_list|safe }};
                                 var judge_list = {{ judge_list|safe }};
@@ -149,12 +146,6 @@
                                     });
 
                                     $("#example-1").replaceWith(tab);
-
-                                    // $("#example-1").dataTable({
-                                    //     aLengthMenu: [
-                                    //         [5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]
-                                    //     ]
-                                    // });
                                 });
 
                                 jQuery(document).ready(function($)
@@ -189,167 +180,6 @@
                                     });
                                 });
 
-                                function setjudge(element) {
-                                    // alert("success");
-                                    var element_name = element.name;
-                                    alert(element_name);
-                                    for(var i=0; i<temp_list.length; i++){
-                                        if(temp_list[i]['number']==element_name){
-                                            alert("此评委已在此面试中");
-                                            return;
-                                        }
-                                    }
-                                    for(var i=0; i<judge_list.length; i++){
-                                        if(judge_list[i]['number']==element_name){
-                                            temp_list.push(judge_list[i]);
-                                            alert(temp_list.length);
-                                        }
-                                    }
-                                    var tab = "<table id=\"example-1\" class=\"table table-striped table-bordered\" cellspacing=\"0\" width=\"80%\">";
-                                    tab += "<thead>";
-                                    tab += "<tr>";
-                                    tab += "<th>学号</th><th>姓名</th><th>电话</th><th>邮箱</th><th>设置</th></tr>";
-                                    tab += "</thead>";
-                                    tab += '<tbody>';
-                                    for(var i = 0; i < temp_list.length; i++){
-                                    tab += '<tr>';
-                                    tab += "<td>" + String(temp_list[i]['number']) + "</td>";
-                                    tab += "<td>" + String(temp_list[i]['name']) + "</td>";
-                                    tab += "<td>" + String(temp_list[i]['phone_number']) + "</td>";
-                                    tab += "<td>" + String(temp_list[i]['mail']) + "</td>";
-                                    tab += "<td> <button type=\"button\" class=\"btn btn-danger\" id=\"sub\" name=\""
-                                                + String(temp_list[i]['number']) + "\" onclick=\"deljudge(this)\">删除评委</button></td>";
-                                    tab += '</tr>';
-                                    }
-                                    tab += '</tbody>';
-                                    tab += "</table>";
-                                    $("#example-1").replaceWith(tab);
-
-                                    // str = "team" + element_name.substring(6);
-                                    // mytext = $("#"+str).text();
-                                    // alert(mytext)
-                                    // $.ajax({
-                                    //     type: 'POST',
-                                    //     data: {'team_name':mytext},//json
-                                    //     {#contentType: 'application/json',#}
-                                    //     dataType: 'json',
-                                    //     url: 'getChoose/',
-                                    //     success: function (data) {
-                                    //         alert(data['info']);
-                                    //     },
-                                    //     error: function (e) {
-                                    //         alert("发送失败");
-                                    //     }
-                                    // });
-                                }
-                                function deljudge(element) {
-                                    // alert("success");
-                                    var element_name = element.name;
-                                    alert(element_name);
-                                    for(var i=0; i<temp_list.length; i++){
-                                        if(temp_list[i]['number']==element_name){
-                                            alert(temp_list.length);
-                                            temp_list.splice(i,1);
-                                        }
-                                    }
-                                    var tab = "<table id=\"example-1\" class=\"table table-striped table-bordered\" cellspacing=\"0\" width=\"80%\">";
-                                    tab += "<thead>";
-                                    tab += "<tr>";
-                                    tab += "<th>学号</th><th>姓名</th><th>电话</th><th>邮箱</th><th>设置</th></tr>";
-                                    tab += "</thead>";
-                                    tab += '<tbody>';
-                                    for(var i = 0; i < temp_list.length; i++){
-                                    tab += '<tr>';
-                                    tab += "<td>" + String(temp_list[i]['number']) + "</td>";
-                                    tab += "<td>" + String(temp_list[i]['name']) + "</td>";
-                                    tab += "<td>" + String(temp_list[i]['phone_number']) + "</td>";
-                                    tab += "<td>" + String(temp_list[i]['mail']) + "</td>";
-                                    tab += "<td> <button type=\"button\" class=\"btn btn-danger\" id=\"sub\" name=\""
-                                                + String(temp_list[i]['number']) + "\" onclick=\"deljudge(this)\">删除评委</button></td>";
-                                    tab += '</tr>';
-                                    }
-                                    tab += '</tbody>';
-                                    tab += "</table>";
-                                    $("#example-1").replaceWith(tab);
-
-                                    // str = "team" + element_name.substring(6);
-                                    // mytext = $("#"+str).text();
-                                    // alert(mytext)
-                                    // $.ajax({
-                                    //     type: 'POST',
-                                    //     data: {'team_name':mytext},//json
-                                    //     {#contentType: 'application/json',#}
-                                    //     dataType: 'json',
-                                    //     url: 'getChoose/',
-                                    //     success: function (data) {
-                                    //         alert(data['info']);
-                                    //     },
-                                    //     error: function (e) {
-                                    //         alert("发送失败");
-                                    //     }
-                                    // });
-                                }
-
-                                function submit_changes() {
-                                    var team = document.getElementById('team');
-                                    var location = document.getElementById('location');
-                                    var start_time = document.getElementById('start_time');
-                                    var end_time = document.getElementById('end_time');
-                                    var date = document.getElementById('date');
-                                    var remarks = document.getElementById('remarks');
-
-                                    alert("team : "+team.value+"\ndate : "+date.value+"\nlocation : "+location.value+"\nstart_time : "+start_time.value+"\nend_time : "+end_time.value+"\nremarks : "+remarks.value );
-
-                                    if(team.value==""){
-                                        alert("请选择队伍");
-                                        return;
-                                    }
-                                    if(date.value==""){
-                                        alert("请填写日期");
-                                        return;
-                                    }
-                                    if(location.value==""){
-                                        alert("请填写地点");
-                                        return;
-                                    }
-                                    if(remarks.value==""){                                       
-                                        remarks.value="无"
-                                    }
-
-                                    if(temp_list.length==null||temp_list.length==0){
-                                        alert("请选择评委");
-                                        return;
-                                    }
-
-                                    alert(temp_list.length);
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'new_interview/',
-                                        traditional:true,
-                                        dataType: 'json',
-                                        contentType:"application/json",
-                                        data: JSON.stringify({
-                                            'team': team.value,
-                                            'date': date.value,
-                                            'location': location.value,
-                                            'start_time': start_time.value,
-                                            'end_time': end_time.value,
-                                            
-                                            'remarks':remarks.value,
-                                            temp_list: temp_list,
-
-                                        }),
-                                        success: function (data) {
-                                            alert(data['info']);
-                                        },
-                                        error: function (e) {
-                                            alert("发送失败");
-                                        }
-                                        // error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                        //     alert(XMLHttpRequest.readyState);
-                                        // }
-                                    });
-                                }
                                 </script>
 
                                 <div id="example-1"></div>

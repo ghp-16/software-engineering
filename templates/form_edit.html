@@ -1,0 +1,298 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Xenon Boostrap Admin Panel">
+    <meta name="author" content="">
+    
+    <title>新增面试</title>
+
+    <!-- <link rel="stylesheet" href="http://fonts.useso.com/css?family=Arimo:400,700,400italic"> -->
+    <!-- <link rel="stylesheet" href="/static/assets/css/fonts/linecons/css/linecons.css"> -->
+    <link rel="stylesheet" href="/static/assets/css/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/assets/css/xenon-core.css">
+    <link rel="stylesheet" href="/static/assets/css/xenon-forms.css">
+    <link rel="stylesheet" href="/static/assets/css/xenon-components.css">
+    <link rel="stylesheet" href="/static/assets/css/xenon-skins.css">
+    <link rel="stylesheet" href="/static/assets/css/custom.css">
+
+    <script src="/static/assets/js/jquery-1.11.1.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="/static/assets/js/html5shiv.min.js"></script>
+        <script src="/static/assets/js/respond.min.js"></script>
+    <![endif]-->
+    
+    
+</head>
+<body class="page-body">
+   
+    <div class="row">
+        <div class="col-sm-12">
+            <center><h1>新建打分表</h1>
+                <div class="panel panel-default">
+                    <div class="panel-body">  
+                        <form role="form" class="form-horizontal">
+                            <!-- <h3 class="panel-title">设置队伍时间地点</h3> -->
+                                
+                                <!-- <div class="form-group-separator"> </div> -->
+
+                                <div class="form-group" style="width: 20%">
+                                    <label class="control-label">请选择对应的队伍</label>
+                                    
+                                    <script type="text/javascript">
+                                        jQuery(document).ready(function($)
+                                        {
+                                            $("#team").selectBoxIt({
+                                                showEffect: 'fadeIn',
+                                                hideEffect: 'fadeOut'
+                                            });
+                                        });
+                                    </script>
+                                    
+                                    <select class="form-control" id="team" onchange="creatTab()">
+                                        <option value="">请选择队伍</option>
+                                        <option value="军乐队">军乐队</option>
+                                        <option value="民乐队">民乐队</option>
+                                        <option value="合唱队">合唱队</option>
+                                        <option value="交响乐队">交响乐队</option>
+                                        <option value="舞蹈队">舞蹈队</option>
+                                        <option value="话剧队">话剧队</option>
+                                        <option value="国标队">国标队</option>
+                                        <option value="键盘队">键盘队</option>
+                                        <option value="美术社">美术社</option>
+                                        <option value="京剧队">京剧队</option>
+                                        <option value="曲艺队">曲艺队</option>
+                                        <option value="摄影队">摄影队</option>
+                                    </select>
+                                        
+                                </div>
+                                <div class="form-group-separator"></div>
+                                <div class="form-group">
+
+                                    <label class="col-sm-3 control-label">打分项名称</label>
+                                    
+                                    <div class="col-sm-2">
+                                        <input type="text" id="unit_name" class="form-control test" placeholder="请输入打分项名称">
+                                    </div>
+                                    <label class="col-sm-3 control-label">打分项分值</label>
+                                    <div class="col-md-3">
+                                        <div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-min="0" data-max="100" data-value="0"  data-fill="#data_value">
+                                    </div>
+                                    
+                                    
+                                </div>
+                                <div class="panel-body">
+                            
+                                 </div>
+
+                                <div class="panel-body">
+                                    <div class="form-group" style="width: 20%">
+                                        <button type="button" class="btn btn-success" name="add" onclick="add_unit()">添加打分项</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group-separator"></div>
+                                <h2>预览</h2>
+                                <div class="form-group-separator"></div>
+                                <div id="mytab"></div>
+                                <div class="form-group-separator"></div>
+                                
+                                
+
+                                <div hidden>
+                                    <input type="text" class="form-control" id="data_value" value="" >
+                                </div>
+
+                                
+
+                                 <!-- <div class="form-group-separator"></div> -->
+                                <button type="button" class="btn btn-info btn-large" id="set" onclick="create_form()">保存表格</button>
+                        </form>
+                </div>
+            </div>
+        </center>
+        </div>
+    </div>
+            
+
+    <!-- Imported styles on this page -->
+    <link rel="stylesheet" href="/static/assets/js/daterangepicker/daterangepicker-bs3.css">
+    <link rel="stylesheet" href="/static/assets/js/select2/select2.css">
+    <link rel="stylesheet" href="/static/assets/js/select2/select2-bootstrap.css">
+    <link rel="stylesheet" href="/static/assets/js/multiselect/css/multi-select.css">
+    <link rel="stylesheet" href="/static/assets/js/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="/static/assets/js/jquery-ui/jquery-ui.min.css">
+    <!-- Bottom Scripts -->
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/TweenMax.min.js"></script>
+    <script src="/static/assets/js/resizeable.js"></script>
+    <script src="/static/assets/js/joinable.js"></script>
+    <script src="/static/assets/js/xenon-api.js"></script>
+    <script src="/static/assets/js/xenon-toggles.js"></script>
+    <script src="/static/assets/js/moment.min.js"></script>
+    <script src="/static/assets/js/datatables/js/jquery.dataTables.min.js"></script>
+
+
+
+    <!-- Imported scripts on this page -->
+    <script src="/static/assets/js/daterangepicker/daterangepicker.js"></script>
+    <script src="/static/assets/js/datepicker/bootstrap-datepicker.js"></script>
+    <script src="/static/assets/js/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="/static/assets/js/colorpicker/bootstrap-colorpicker.min.js"></script>
+    <script src="/static/assets/js/select2/select2.min.js"></script>
+    <script src="/static/assets/js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/static/assets/js/selectboxit/jquery.selectBoxIt.min.js"></script>
+    <script src="/static/assets/js/tagsinput/bootstrap-tagsinput.min.js"></script>
+    <script src="/static/assets/js/typeahead.bundle.js"></script>
+    <script src="/static/assets/js/handlebars.min.js"></script>
+    <script src="/static/assets/js/multiselect/js/jquery.multi-select.js"></script>
+    <script src="/static/assets/js/datatables/dataTables.bootstrap.js"></script>
+    <script src="/static/assets/js/datatables/yadcf/jquery.dataTables.yadcf.js"></script>
+    <script src="/static/assets/js/datatables/tabletools/dataTables.tableTools.min.js"></script>
+    <script src="/static/assets/js/knob/jquery.knob.min.js"></script>
+
+    <!-- JavaScripts initializations and stuff -->
+    <script src="/static/assets/js/xenon-custom.js"></script>
+    <script type="text/javascript">
+
+        var temp_list = [];
+
+        function creatTab() {
+            var team = document.getElementById('team');
+            if(team.value=="")return;
+            $.ajax({
+                    type: 'POST',
+                    url: 'form_edit/',
+                    traditional:true,
+                    dataType: 'json',
+                    contentType:"application/json",
+                    data: JSON.stringify({
+                        'team': team.value,
+                    }),
+                    success: function (data) {
+                        var list1 = data['temp_list'];
+                        var list2 = [];
+                        for( var i = 0 ; i <list1.length ; i++){
+                            list2.push({"name":list1[i].name , "value":list1[i].value});
+                        }
+                        // alert(data['info']);
+
+                        temp_list = list1;
+
+                        // alert(temp_list[0]['value']);
+                        var tab = "<div id=\"mytab\">";
+                        for(var i = 0; i < temp_list.length; i++){
+                            tab += "<div class=\"panel-body\">";
+                            tab += "<label class=\"col-sm-3 control-label\">" + String(temp_list[i]['name']) + "</label>";
+                            tab += "<div class=\"form-group\" style=\"width: 30%\">";
+                            tab += "<div class=\"slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all\"  data-min=\"0\" data-max=\""+String(temp_list[i]['value'])+"\" data-value=\""+String(temp_list[i]['value'])+"\">";
+                            tab += "<div class=\"ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min\" style=\"width: 100%;\"></div><span class=\"ui-slider-handle ui-state-default ui-corner-all\" tabindex=\"0\" style=\"left: 100%;\"><span class=\"ui-label\">"+String(temp_list[i]['value'])+"</span></span></div>";
+                            tab += "</div>";
+                            tab += "<button type=\"button\" class=\"btn btn-danger\" id=\"set\" name=\""+String(temp_list[i]['name'])+"\" onclick=\"del_unit(this)\">删除</button>";
+                            tab += "</div>";
+                        }
+                        tab += "</div>";
+                        // alert(tab);
+                        $("#mytab").replaceWith(tab);
+                    },
+                    error: function (e) {
+                        alert("发送失败");
+                    }
+                    // error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //     alert(XMLHttpRequest.readyState);
+                    // }
+            });
+
+        }
+        function add_unit() {
+            // alert("success");
+            var unit_name = document.getElementById('unit_name');
+            var data_value = document.getElementById('data_value');
+            // alert(data_value.value);
+            if(unit_name.value=="")
+            {
+                alert("请输入打分项名称");
+                return;
+            }
+            // alert(unit_name.value+':'+data_value.value);
+            var unit = {"name":unit_name.value , "value":data_value.value};
+            // alert(unit['value']);
+            temp_list.push(unit);
+            // alert(temp_list.length);
+            var tab = "<div id=\"mytab\">";
+            for(var i = 0; i < temp_list.length; i++){
+            tab += "<div class=\"panel-body\">";
+            tab += "<label class=\"col-sm-3 control-label\">" + String(temp_list[i]['name']) + "</label>";
+            tab += "<div class=\"form-group\" style=\"width: 30%\">";
+            tab += "<div class=\"slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all\"  data-min=\"0\" data-max=\""+String(temp_list[i]['value'])+"\" data-value=\""+String(temp_list[i]['value'])+"\">";
+            tab += "<div class=\"ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min\" style=\"width: 100%;\"></div><span class=\"ui-slider-handle ui-state-default ui-corner-all\" tabindex=\"0\" style=\"left: 100%;\"><span class=\"ui-label\">"+String(temp_list[i]['value'])+"</span></span></div>";
+            tab += "</div>";
+            tab += "<button type=\"button\" class=\"btn btn-danger\" id=\"set\" name=\""+String(temp_list[i]['name'])+"\" onclick=\"del_unit(this)\">删除</button>";
+            tab += "</div>";
+            }
+            tab += "</div>";
+            // alert(tab);
+            $("#mytab").replaceWith(tab);
+        }
+        function del_unit(element) {
+            var unit_name = element.name;
+            alert(unit_name);
+            for(var i = 0; i < temp_list.length; i++){
+                if (temp_list[i]['name']==unit_name) {
+                    temp_list.splice(i,1);
+                    break;
+                }
+            }
+            var tab = "<div id=\"mytab\">";
+            for(var i = 0; i < temp_list.length; i++){
+            tab += "<div class=\"panel-body\">";
+            tab += "<label class=\"col-sm-3 control-label\">" + String(temp_list[i]['name']) + "</label>";
+            tab += "<div class=\"form-group\" style=\"width: 30%\">";
+            tab += "<div class=\"slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all\"  data-min=\"0\" data-max=\""+String(temp_list[i]['value'])+"\" data-value=\""+String(temp_list[i]['value'])+"\">";
+            tab += "<div class=\"ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min\" style=\"width: 100%;\"></div><span class=\"ui-slider-handle ui-state-default ui-corner-all\" tabindex=\"0\" style=\"left: 100%;\"><span class=\"ui-label\">"+String(temp_list[i]['value'])+"</span></span></div>";
+            tab += "</div>";
+            tab += "<button type=\"button\" class=\"btn btn-danger\" id=\"set\" name=\""+String(temp_list[i]['name'])+"\" onclick=\"del_unit(this)\">删除</button>";
+            tab += '</div>';
+            }
+            tab += "</div>";
+            // alert(tab);
+            $("#mytab").replaceWith(tab);
+        }
+        function create_form() {
+            var team = document.getElementById('team');
+            if(team.value==""){
+                alert("请选择队伍");
+                return;
+            }
+            // if(temp_list.length==0){
+            //     alert("请选择评委");
+            //         return;
+            // }
+            $.ajax({
+                    type: 'POST',
+                    url: 'create_form/',
+                    traditional:true,
+                    dataType: 'json',
+                    contentType:"application/json",
+                    data: JSON.stringify({
+                        'team': team.value,
+                        temp_list: temp_list,
+                    }),
+                    success: function (data) {
+                        alert(data['info']);
+                    },
+                    error: function (e) {
+                        alert("发送失败");
+                    }
+                    // error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //     alert(XMLHttpRequest.readyState);
+                    // }
+            });
+        }
+    </script>
+
+</body></html>
