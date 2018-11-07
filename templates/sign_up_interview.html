@@ -28,11 +28,15 @@
     {{ post }}
     <div class="row">
         <div class="col-sm-12">
-            <center><h1>面试管理</h1>
+            <center><h1>我的面试</h1>
                 <div class="panel panel-default">
                     <div class="panel-body">  
                         <form role="form" class="form-horizontal">
-
+                        <div class="form-group-separator"></div>
+                        <div id="welcome">
+                        <div class="title">
+                            
+                        <div class="form-group-separator"></div>
                                 <div id="mytab"></div>
 
 
@@ -42,7 +46,7 @@
                                 <script type="text/javascript">
                                 // var temp_list =  {{ interview_list|safe }};
                                 var interview_list = {{ interview_list|safe }};
-
+                                var not_list = {{ not_list|safe }};
                                 jQuery(document).ready(function($)
                                 {
                                     
@@ -59,16 +63,23 @@
                                     tab += "<td>" + String(interview_list[i]['location']) + "</td>";
                                     tab += "<td>" + String(interview_list[i]['judge_list']) + "</td>";
                                     tab += "<td>" + String(interview_list[i]['remarks']) + "</td>";
-                                    tab += "<td> <button type=\"button\" class=\"btn btn-secondary\" id = \"set1\" name=\""+ String(interview_list[i]['id']) + "\" onclick=\"\">编辑</button>";
-                                    if(String(interview_list[i]['open_bool'])=="0"){
-                                        tab += "<button type=\"button\" class=\"btn btn-secondary\" id = \"set1\" name=\""+ String(interview_list[i]['id']) + "\" onclick=\"set_open(this,1)\">打开</button>"
+                                    tab += "<td> <button  class=\"btn btn-danger\"  name=\""+ String(interview_list[i]['id']) + "\" onclick=\"del_student(this)\">删除</button></td></td>";
+
+                                    tab += '</tr>';
                                     }
-                                    else{
-                                        tab += "<button type=\"button\" class=\"btn btn-danger\" id = \"set1\" name=\""+ String(interview_list[i]['id']) + "\" onclick=\"set_open(this,0)\">关闭</button>"
+
+                                    for(var i = 0; i < not_list.length; i++){
+                                    tab += "<tr name=\""+ String(not_list[i]['team']) +"1\">";
+                                    tab += "<td>" + String(not_list[i]['team']) + "</td>";
+                                    tab += "<td>" + String(not_list[i]['date'])+" : " +String(not_list[i]['start_time'])+"-"+String(not_list[i]['end_time'])+ "</td>";
+                                    tab += "<td>" + String(not_list[i]['location']) + "</td>";
+                                    tab += "<td>" + String(not_list[i]['judge_list']) + "</td>";
+                                    tab += "<td>" + String(not_list[i]['remarks']) + "</td>";
+                                    tab += "<td> <button class=\"btn btn-secondary\"  name=\""+ String(not_list[i]['id']) + "\" onclick=\"add_student(this)\">报名</button>";
+
+                                    tab += '</tr>';
                                     }
-                                    tab += "<button  class=\"btn btn-danger\" id = \"set1\" name=\""+ i + "\" onclick=\"del_inter(this)\">删除</button></td></td></tr>";
-                                    // alert(interview_list[i]['id']);
-                                    }
+
                                     tab += '</tbody>';
                                     tab += "</table>";
 
@@ -81,47 +92,16 @@
                                         ]
                                     });
                                 });
-
-                                function del_inter(element) {
-                                    // alert("success");
-                                    var id = parseInt(element.name);
-                                    alert(id);
-                                    var list = interview_list[id];
-                                    alert(interview_list[id]['team']);
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: 'del_interview/',
-                                        traditional:true,
-                                        dataType: 'json',
-                                        contentType:"application/json",
-                                        data: JSON.stringify({
-                                            list: list,
-
-                                        }),
-                                        success: function (data) {
-                                            alert(data['info']);
-                                        },
-                                        error: function (e) {
-                                            alert("发送失败");
-                                        }
-                                    });
-                                }
-                                function set_open(element,set) {
-                                    // alert("success");
+                                function del_student(element) {
                                     id = parseInt(element.name);
                                     alert(id);
-                                    if(set==1)
-                                    {
-                                        alert("love jjy");
-                                    }
-
                                     $.ajax({
                                         type: 'POST',
                                         
-                                        data:{'id':id,'set':set},
+                                        data:{'id':id},
                                         {#contentType: 'application/json',#}
                                         dataType: 'json',
-                                        url: 'set_open/',
+                                        url: 'del_student/',
                                         success: function (data) {
                                             alert(data['info']);
                                             location.reload();
@@ -131,6 +111,25 @@
                                         }
                                     });
                                 }
+                                function add_student(element) {
+                                    id = parseInt(element.name);
+                                    alert(id);
+                                    $.ajax({
+                                        type: 'POST',
+                                        data:{'id':id},
+                                        {#contentType: 'application/json',#}
+                                        dataType: 'json',
+                                        url: 'add_student/',
+                                        success: function (data) {
+                                            alert(data['info']);
+                                            location.reload();
+                                        },
+                                        error: function (e) {
+                                            alert("发送失败");
+                                        }
+                                    });
+                                }
+                                
                                 </script>
 
                                 <!-- <div id="example-1"></div>
@@ -142,7 +141,6 @@
                                 </center>
                                 <div id="mytab"></div> -->
                                  <div class="form-group-separator"></div>
-                                <button type="button" class="btn btn-info btn-large" onclick="location.href='interview_edit.html'">新建面试</button>
                         </form>
                     <div class="panel panel-default">
                 
@@ -152,6 +150,10 @@
                 </div>
                 </div>
             </div>
+            <h1>艺术团概况</h1>
+                        </div>
+                            <p>清华大学学生艺术团是一支由学校创建的学生业余文艺团体，是广大清华学子进行艺术实践的园地，是学校实施艺术教育和美育教育的第二课堂，是清华大学的一支文艺代表队。学生艺术团由校团委直接领导，由艺术教育中心负责艺术指导和教学，现辖军乐队、民乐队、合唱队、交响乐队、舞蹈队、话剧队、国际标准舞队、键盘队、美术社、摄影队、京剧队、曲艺队等十二支队伍，拥有包括本科生、硕士生、博士生以及留学生在内的1200名成员。 </p>
+                        </div>
         </center>
         </div>
     </div>
