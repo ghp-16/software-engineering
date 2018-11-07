@@ -6,6 +6,8 @@ from django.http import HttpResponse
 import re
 import hashlib
 import json
+import time
+from myblog.qrcode_producer import produce_qrcode
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
@@ -774,4 +776,19 @@ def notice(request):
         #document.getElementById('tui').value="txt"
         info=""
         response = HttpResponse(json.dumps({"info": info }))
+        return response
+
+
+#-------------------------------get_qrcode---------------------
+@csrf_exempt
+def get_qrcode(request):
+    if request.is_ajax():
+        url = request.POST.get('url')
+        path = "static/qrcode/%s.png" % time.strftime('%Y-%m-%d-%H:%M:%S',time.localtime(time.time()))
+        path = path.replace(':', '-')
+        produce_qrcode(url, path)
+        path = "/" + path
+        info = "生成成功"
+        response = HttpResponse(json.dumps({"info": info,
+                                            "path": path}))
         return response

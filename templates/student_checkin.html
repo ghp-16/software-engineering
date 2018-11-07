@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body onload="creatTab()">
+    {% csrf_token %}
+    <div class="container" style="text-align: center">
+        <h1>签到</h1>
+        <p><label>当前面试场次:</label></p>
+        <button class="btn btn-success" type="button" id="get_qrcode" onclick="checkin()">点击签到</button>
+    </div>
+    <hr style="height: 4px; color: #000;">
+    <script>
+        function checkin() {
+            alert('签到成功');
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

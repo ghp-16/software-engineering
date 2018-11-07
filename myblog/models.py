@@ -20,6 +20,7 @@ class Team(models.Model):
     captain_num = models.CharField(max_length=10 , default="2016011392")
     # interview = ListField()
 
+
 class Interview(models.Model):
     team = models.CharField(max_length=32 , default="国标队")
     date = models.CharField(max_length=32 , default="10/30/2018")
@@ -28,3 +29,4 @@ class Interview(models.Model):
     location = models.CharField(max_length=32 , default="蒙民伟楼") 
     remarks = models.CharField(max_length=600 , default="多喝热水") 
     judge_list = models.CharField(max_length=4000, default="无")
+
