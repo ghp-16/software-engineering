@@ -399,6 +399,8 @@ def get_interview_list():
         i['judge_list']=""
         list3=[]
         for j in list1:
+            if j == "":
+                continue
             list2=j.split(" ")
             list3.append(list2[1])
         i['judge_list']=" ".join(list3)
@@ -678,6 +680,7 @@ def new_interview(request):
 def manage_interview(request):
     template = get_template('manage_interview.html')
     interview_list = get_interview_list()
+    print(str(interview_list))
     post=request.session.get('username')
     html = template.render(locals())    
     return HttpResponse(html)
@@ -698,6 +701,87 @@ def del_interview(request):
         response = HttpResponse(json.dumps({"info": info}))
         return response
 
+@csrf_exempt
+def set_open(request):
+    if request.is_ajax():
+        team_id = str(request.POST.get('id'))
+        # print(team_id)
+        
+        temp_interview =  Interview.objects.get(id=team_id)
+        temp_interview.open_bool = str(request.POST.get('set'))  
+        temp_interview.save()
+        info= "lalala"
+        info = "已将面试的状态设置为\"" + temp_interview.open_bool
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
+
+
+#-------------------------------sign_up_interview..html---------------------
+@csrf_exempt
+def sign_up_interview(request):
+    template = get_template('sign_up_interview.html')
+    # username=request.session.get('username')
+    user_number=request.session.get('account')
+    person_model = Employee.objects.get(number = user_number)
+    my_team=[]
+    if person_model.choose=="":
+        my_team=[]
+    else:
+        my_team = person_model.choose.split("++++")
+
+    interview_list=[]
+    not_list=[]
+    mylist = get_interview_list()
+
+    for item in mylist:
+        if item['team'] in my_team:
+            student_list = []
+            if item['student_list']=="":
+                student_list = []
+            else :
+                student_list = item['student_list'].split("++++")
+            if user_number in student_list :
+                interview_list.append(item)
+            else :
+                not_list.append(item)
+
+    print(interview_list)
+    print(not_list)
+    html = template.render(locals())
+    return HttpResponse(html)
+
+@csrf_exempt
+def add_student(request):
+    if request.is_ajax():
+        user_number=request.session.get('account')
+        interview_id = str(request.POST.get('id'))
+        temp_interview =  Interview.objects.get(id=interview_id)
+
+        list1 = []
+        if temp_interview.student_list=="":
+            list1 = []
+        else :
+            list1 = temp_interview.student_list.split("++++")
+        list1.append(user_number)
+        temp_interview.student_list="++++".join(list1)
+        temp_interview.save()
+        info = "面试已添加 \"" + temp_interview.student_list
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
+
+@csrf_exempt
+def del_student(request):
+    if request.is_ajax():
+        user_number=request.session.get('account')
+        interview_id = str(request.POST.get('id'))
+        temp_interview =  Interview.objects.get(id=interview_id)
+        list1 = temp_interview.student_list.split("++++")
+        list1.remove(user_number)
+        temp_interview.student_list="++++".join(list1)
+        temp_interview.save()
+        info = "已将面试的状态设置为\"" + temp_interview.student_list
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
 #-------------------------------send_txt.html---------------------
 
 def manage_send_txt(request):

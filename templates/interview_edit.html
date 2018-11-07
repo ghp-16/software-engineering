@@ -314,6 +314,12 @@
                                     if(remarks.value==""){                                       
                                         remarks.value="无"
                                     }
+
+                                    if(temp_list.length==null||temp_list.length==0){
+                                        alert("请选择评委");
+                                        return;
+                                    }
+
                                     alert(temp_list.length);
                                     $.ajax({
                                         type: 'POST',
