@@ -63,7 +63,7 @@
                                     tab += "<td>" + String(interview_list[i]['location']) + "</td>";
                                     tab += "<td>" + String(interview_list[i]['judge_list']) + "</td>";
                                     tab += "<td>" + String(interview_list[i]['remarks']) + "</td>";
-                                    tab += "<td> <button  class=\"btn btn-danger\"  name=\""+ String(interview_list[i]['id']) + "\" onclick=\"del_student(this)\">删除</button></td></td>";
+                                    tab += "<td> <button  class=\"btn btn-danger\"  name=\""+ String(interview_list[i]['id']) + "\" onclick=\"del_student(this)\">取消</button></td></td>";
 
                                     tab += '</tr>';
                                     }
@@ -112,6 +112,11 @@
                                     });
                                 }
                                 function add_student(element) {
+                                    if(interview_list.length>=1)
+                                    {
+                                        alert("一支队伍只能报名一个面试");
+                                        return;
+                                    }
                                     id = parseInt(element.name);
                                     alert(id);
                                     $.ajax({

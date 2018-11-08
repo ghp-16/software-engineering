@@ -29,6 +29,7 @@ urlpatterns = [
     path('check_in_index/', myblog.views.checkin),
     path('tsinghua_login/', myblog.views.tsinghua),
     path('homepage/manage_student.html', myblog.views.manage_type),
+    # path('homepage/form_edit.html', myblog.views.form_edit),
     path('homepage/manage_team.html', myblog.views.manage_team),
     path('homepage/interview_edit.html', myblog.views.interview_edit),
     path('homepage/sign_up_interview.html', myblog.views.sign_up_interview),
@@ -63,7 +64,9 @@ urlpatterns = [
     url(r'.+\/left_web.html', myblog.views.homepage_info),
     url(r'.+\/add_student/', myblog.views.add_student),
     url(r'.+\/del_student/', myblog.views.del_student),
-
+    url(r'.+\/create_form/', myblog.views.create_form),
+    url(r'.+\/form_edit/', myblog.views.form_edit),
+    # path('homepage/form_edit.html', myblog.views.form_edit),
 
     url(r'homepage/(.+)',  myblog.views.homepage_deal),
     # path('homepage/left.html', myblog.views.homepage_deal),
