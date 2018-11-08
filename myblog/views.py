@@ -3,6 +3,7 @@ from myblog.models import Employee, Team, Interview
 from django.template.loader import get_template
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
+from django.core import serializers
 import re
 import hashlib
 import json
@@ -14,6 +15,7 @@ from django.http import HttpResponseRedirect
 import urllib.request
 import urllib.parse
 import http.cookiejar
+import os
 
 
 @csrf_exempt
@@ -896,11 +898,110 @@ def notice(request):
 def get_qrcode(request):
     if request.is_ajax():
         url = request.POST.get('url')
-        path = "static/qrcode/%s.png" % time.strftime('%Y-%m-%d-%H:%M:%S',time.localtime(time.time()))
+        if not os.path.exists('media/qrcode'):
+            os.makedirs('media/qrcode')
+        path = "media/qrcode/%s.png" % time.strftime('%Y-%m-%d-%H:%M:%S',time.localtime(time.time()))
         path = path.replace(':', '-')
         produce_qrcode(url, path)
         path = "/" + path
         info = "生成成功"
         response = HttpResponse(json.dumps({"info": info,
                                             "path": path}))
+        return response
+
+
+@csrf_exempt
+def checkin_index(request):
+    template = get_template('checkin_index.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+@csrf_exempt
+def checkin(request):
+    template = get_template('student_checkin.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+@csrf_exempt
+def judge_interview(request):
+    template = get_template('judge_interview.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+@csrf_exempt
+def get_interview_students(request):
+    if request.is_ajax():
+        interview = request.POST.get('interview')
+        # ms.objects.create(student_number='2016011123')
+        interview_list = Interview.objects.all()
+        msg = ""
+        students = ""
+        for i in interview_list:
+            interview_id = str(i.id)
+            if interview_id == interview:
+                msg = i.team
+                students = i.student_list
+                break
+        student_list = students.split()
+        all_students = Employee.objects.all()
+        student_names = ""
+        for i in student_list:
+            for j in all_students:
+                if i == j.number:
+                    student_names = student_names + ' ' + j.name
+        response = HttpResponse(json.dumps({'list':  students,
+                                            'name_list': student_names,
+                                            'msg': msg}))
+        return response
+
+
+@csrf_exempt
+def check_in_interview(request):
+    if request.is_ajax():
+        interview_id = request.POST['interview']
+        interview = Interview.objects.filter(id=interview_id).first()
+        msg = '签到成功'
+        update_interview = Interview.objects.filter(id=interview_id)
+        student_list = interview.student_list
+        student_number = request.session['student_number']
+        if not student_number in student_list:
+            student_list = student_list + ' ' + request.session['student_number']
+        else:
+            msg = '你已经签到过了哦~'
+        update_interview.update(student_list=student_list)
+        # ms.objects.create(student_number=request.session['student_number'])
+        response = HttpResponse(json.dumps({'msg': msg}))
+        return response
+
+
+@csrf_exempt
+def get_interview_info(request):
+    if request.is_ajax():
+        interview = request.POST['interview']
+        interview_list = Interview.objects.all()
+        team  = ""
+        date = ""
+        start_time = ""
+        end_time = ""
+        location = ""
+        remarks = ""
+        for i in interview_list:
+            interview_id = str(i.id)
+            if interview_id == interview:
+                team = i.team
+                date = i.date
+                start_time = i.start_time
+                end_time = i.end_time
+                location = i.location
+                remarks = i.remarks
+                break
+        response = HttpResponse(json.dumps({'team': team,
+                                            'date': date,
+                                            'start_time': start_time,
+                                            'end_time': end_time,
+                                            'location': location,
+                                            'remarks': remarks}))
         return response

@@ -18,7 +18,8 @@ from django.urls import path
 from django.conf.urls import url
 import myblog.views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.contrib import staticfiles
+from django.views.static import serve
+from . import settings
 
 urlpatterns = [
     #________________page link ______________   
@@ -26,7 +27,7 @@ urlpatterns = [
     # path('index.html', myblog.views.index),
     path('index.html', myblog.views.login_tsinghua),
     path('tsinghua/', myblog.views.login_tsinghua),
-    path('check_in_index/', myblog.views.checkin),
+    path('check_in_index/', myblog.views.checkin_index),
     path('tsinghua_login/', myblog.views.tsinghua),
     path('homepage/manage_student.html', myblog.views.manage_type),
     # path('homepage/form_edit.html', myblog.views.form_edit),
@@ -36,6 +37,9 @@ urlpatterns = [
     path('homepage/manage_interview.html', myblog.views.manage_interview),
     path('homepage/send_txt.html', myblog.views.manage_send_txt),
     path('homepage/notice.html', myblog.views.manage_notice),
+    path('homepage/judge_interview.html', myblog.views.judge_interview),
+    path('homepage/judge_interview/', myblog.views.judge_interview),
+    path('homepage/checkin/', myblog.views.checkin),
     # path('index.html', myblog.views.login_tsinghua),
     path('test/', myblog.views.test),
     # path('query/', myblog.views.query),
@@ -46,6 +50,9 @@ urlpatterns = [
 
     #______________function link______________________
     url(r'.+\/get_qrcode/',myblog.views.get_qrcode),
+    url(r'.+\/get_interview_students/', myblog.views.get_interview_students),
+    url(r'.+\/check_in_interview/', myblog.views.check_in_interview),
+    url(r'.+\/get_interview_info/', myblog.views.get_interview_info),
     url(r'.+\/set_student/',myblog.views.set_student),
     url(r'.+\/delMem/',myblog.views.del_mem),
     url(r'.+\/delteam/',myblog.views.del_team),
@@ -73,6 +80,7 @@ urlpatterns = [
     # path('homepage/student.html', myblog.views.homepage_deal),
     path('admin/', admin.site.urls),
     path('catalog/', myblog.views.catalog),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})
 ]
 
 urlpatterns += staticfiles_urlpatterns()

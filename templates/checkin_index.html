@@ -55,23 +55,31 @@
                         'password': password.value,},
                 dataType: 'json',
                 success: function (data) {
-                    alert(data['msg']);
-                    if(data['msg'].indexOf("你好") != -1) {
-                        if(data['query_msg'].indexOf("第一次") != -1) {
-                            alert(data['query_msg']);
+                    var redirectURL = GetQueryString("redirectURL");
+                    if(redirectURL == null) {
+                        alert(data['msg']);
+                        if (data['msg'].indexOf("你好") != -1) {
+                            if (data['query_msg'].indexOf("第一次") != -1) {
+                                alert(data['query_msg']);
+                            }
+                            if (data['type'].indexOf("student") != -1) {
+                                window.location.href = "/homepage/main.html";
+                            }
+                            else if (data['type'].indexOf("judge") != -1) {
+                                window.location.href = "/homepage/main_judge.html";
+                            }
+                            else if (data['type'].indexOf("team_manager") != -1) {
+                                window.location.href = "/homepage/main_team.html";
+                            }
+                            else if (data['type'].indexOf("web_manager") != -1) {
+                                window.location.href = "/homepage/main_web.html";
+                            }
                         }
-                        if(data['type'].indexOf("student") != -1){
-                            window.location.href = "/homepage/main.html";
-                        }
-                        else if (data['type'].indexOf("judge") != -1){
-                            window.location.href = "/homepage/main_judge.html";
-                        }
-                        else if (data['type'].indexOf("team_manager") != -1){
-                            window.location.href = "/homepage/main_team.html";
-                        }
-                        else if (data['type'].indexOf("web_manager") != -1){
-                            window.location.href = "/homepage/main_web.html";
-                        }
+                    }
+                    else{
+                        var num_of_interview = GetQueryString('interview');
+                        if(num_of_interview != null)
+                            window.location.href = redirectURL+'?interview=' + String(num_of_interview);
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -83,6 +91,12 @@
                     alert(textStatus);
                 }
             });
+        }
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+            if(r!=null)return  unescape(r[2]); return null;
         }
     </script>
     <script src="/static/main.js"></script>

@@ -2,20 +2,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>二维码</title>
+    <title>签到</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body onload="creatTab()">
     {% csrf_token %}
     <div class="container" style="text-align: center">
         <h1>签到</h1>
-        <p><label>当前面试场次:</label></p>
+        <hr style="height: 4px; color: #000;">
+        <div id="interview_info"></div>
         <button class="btn btn-success" type="button" id="get_qrcode" onclick="checkin()">点击签到</button>
     </div>
-    <hr style="height: 4px; color: #000;">
     <script>
         function checkin() {
-            alert('签到成功');
+            jQuery.ajax({
+                type: 'POST',
+                data: {'interview':String(GetQueryString('interview'))},//json
+                dataType: 'json',
+                url: 'check_in_interview/',
+                success:function (msg) {
+                    alert(msg['msg']);
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    // 状态码
+                    alert(XMLHttpRequest.status);
+                    // 状态
+                    alert(XMLHttpRequest.readyState);
+                    // 错误信息
+                    alert(textStatus);
+                }
+            });
+            {#alert('签到成功');#}
+        }
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+        function creatTab() {
+            var tab = '<table class="table"><thead><table class="table">\n' +
+                    '<thead>\n' +
+                    '<tr>\n' +
+                    '<th>场次</th>\n' +
+                    '<th>队名</th>\n' +
+                    '<th>日期</th>\n' +
+                    '<th>开始时间</th>\n' +
+                    '<th>结束时间</th>\n' +
+                    '<th>地点</th>\n' +
+                    '<th>备注</th>\n' +
+                    '</tr>\n' +
+                    '</thead>\n' +
+                    '<tbody>';
+            jQuery.ajax({
+                type: 'POST',
+                data: {'interview': String(GetQueryString('interview'))},//json
+                dataType: 'json',
+                url: 'get_interview_info/',
+                success:function (msg) {
+                    var team = msg['team'];
+                    var date = msg['date'];
+                    var start_time = msg['start_time'];
+                    var end_time = msg['end_time'];
+                    var location = msg['location'];
+                    var remarks = msg['remarks'];
+                    tab += '<tr>';
+                    tab += "<td>" + String(GetQueryString('interview')) + "</td>";
+                    tab += "<td>" + team + "</td>";
+                    tab += "<td>" + date + "</td>";
+                    tab += "<td>" + start_time + "</td>";
+                    tab += "<td>" + end_time + "</td>";
+                    tab += "<td>" + location + "</td>";
+                    tab += "<td>" + remarks + "</td>";
+                    tab += '</tr>';
+                    tab += '</tbody>';
+                    tab += '</table>';
+                    div1 = document.getElementById('interview_info');
+                    div1.innerHTML=tab;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    // 状态码
+                    alert(XMLHttpRequest.status);
+                    // 状态
+                    alert(XMLHttpRequest.readyState);
+                    // 错误信息
+                    alert(textStatus);
+                }
+            });
         }
     </script>
     <script src="https://code.jquery.com/jquery.js"></script>

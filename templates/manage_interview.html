@@ -1,13 +1,12 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Xenon Boostrap Admin Panel" />
     <meta name="author" content="" />
-    
+
     <title>新增面试</title>
 
     <!-- <link rel="stylesheet" href="http://fonts.useso.com/css?family=Arimo:400,700,400italic"> -->
@@ -22,7 +21,7 @@
 
     <script src="/static/assets/js/jquery-1.11.1.min.js"></script>
 
-    
+
 </head>
 <body class="page-body" >
     {{ post }}
@@ -30,7 +29,7 @@
         <div class="col-sm-12">
             <center><h1>面试管理</h1>
                 <div class="panel panel-default">
-                    <div class="panel-body">  
+                    <div class="panel-body">
                         <form role="form" class="form-horizontal">
 
                                 <div id="mytab"></div>
@@ -45,7 +44,7 @@
 
                                 jQuery(document).ready(function($)
                                 {
-                                    
+
                                     var tab = "<table id=\"example-2\" class=\"table table-striped table-bordered\" cellspacing=\"0\" width=\"80%\">";
                                     tab += "<thead>";
                                     tab += "<tr>";
@@ -61,10 +60,17 @@
                                     tab += "<td>" + String(interview_list[i]['remarks']) + "</td>";
                                     tab += "<td> <button type=\"button\" class=\"btn btn-secondary\" id = \"set1\" name=\""+ String(interview_list[i]['id']) + "\" onclick=\"\">编辑</button>";
                                     if(String(interview_list[i]['open_bool'])=="0"){
+                                        tab += "<button type=\"button\" class=\"btn btn-secondary\" disabled=true id = \"enter" + String(interview_list[i]['id']) +
+                                        "\" name=\"enter"+ String(interview_list[i]['id']) + "\" onclick=\"\">进入</button>";
                                         tab += "<button type=\"button\" class=\"btn btn-secondary\" id = \"set1\" name=\""+ String(interview_list[i]['id']) + "\" onclick=\"set_open(this,1)\">打开</button>"
+                                        {#document.getElementById('enter'+ String(interview_list[i]['id'])).disabled = true;#}
                                     }
                                     else{
+                                        tab += "<button type=\"button\" class=\"btn btn-secondary\"  id = \"enter" + String(interview_list[i]['id']) +
+                                        "\" name=\"enter"+ String(interview_list[i]['id']) + "\"  onclick=\"window.location.href='/homepage/judge_interview.html?interview="
+                                            +  String(interview_list[i]['id']) + "'\">进入</button>";
                                         tab += "<button type=\"button\" class=\"btn btn-danger\" id = \"set1\" name=\""+ String(interview_list[i]['id']) + "\" onclick=\"set_open(this,0)\">关闭</button>"
+                                        {#document.getElementById('enter'+ String(interview_list[i]['id'])).disabled = false;#}
                                     }
                                     tab += "<button  class=\"btn btn-danger\" id = \"set1\" name=\""+ i + "\" onclick=\"del_inter(this)\">删除</button></td></td></tr>";
                                     // alert(interview_list[i]['id']);
@@ -110,6 +116,10 @@
                                     // alert("success");
                                     id = parseInt(element.name);
                                     alert(id);
+                                    if(set==1)
+                                    {
+                                        alert("love jjy");
+                                    }
 
                                     $.ajax({
                                         type: 'POST',
