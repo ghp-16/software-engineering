@@ -5,10 +5,11 @@
     <title>二维码</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body onload="creatTab()">
+<body onload="interviewTab()">
     {% csrf_token %}
     <div class="container" style="text-align: center">
         <h1>二维码生成</h1>
+        <div id="interview_info"></div>
         <button class="btn btn-success" type="button" id="get_qrcode" onclick="get_qrcode()">点击生成签到二维码</button>
         <div id="qrcode">
         </div>
@@ -23,7 +24,7 @@
         function get_qrcode() {
             jQuery.ajax({
                 type: 'POST',
-                data: {'url':'https://art-test-ac.app.secoder.net'},//json
+                data: {'url':'https://art-test-ac.app.secoder.net/check_in_index/?redirectURL=/homepage/student_checkin.html&interview='+String(GetQueryString('interview'))},//json
                 dataType: 'json',
                 url: 'get_qrcode/',
                 success:function (msg) {
@@ -40,30 +41,112 @@
                 }
             });
         }
-        function creatTab(){
-                {#var mylist = {{ mylist|safe }};#}
-                var tab = '<table class="table"><thead><table class="table">\n' +
+        function interviewTab() {
+            var tab = '<table class="table"><thead><table class="table">\n' +
                     '<thead>\n' +
                     '<tr>\n' +
-                    '<th>#</th>\n' +
-                    '<th>姓名</th>\n' +
-                    '<th>学号</th>\n' +
+                    '<th>场次</th>\n' +
+                    '<th>队名</th>\n' +
+                    '<th>日期</th>\n' +
+                    '<th>开始时间</th>\n' +
+                    '<th>结束时间</th>\n' +
+                    '<th>地点</th>\n' +
+                    '<th>备注</th>\n' +
                     '</tr>\n' +
                     '</thead>\n' +
                     '<tbody>';
-                {#for(var i = 0; i < mylist.length; i++){#}
-                {#    tab += '<tr>';#}
-                {#    tab += "<td>" + String(i+1) + "</td>";#}
-                {#    tab += "<td><label id=\"team" + String(i) + "\">" + String(mylist[i]['name']) + "</label></td>";#}
-                {#    tab += "<td>" + String(mylist[i]['captain']) + "</td>"#}
-                {#    tab += "<td><button class=\"btn btn-danger\" name=\"sub"#}
-                {#                + String(i) + "\" onclick=\"delTeam(this)\">删除</button></td>";#}
-                {#    tab += '</tr>';}#}
-                tab += '</tbody>';
-                tab += '</table>';
-                div1 = document.getElementById('mytab');
-                div1.innerHTML=tab;
-            }
+            jQuery.ajax({
+                type: 'POST',
+                data: {'interview': String(GetQueryString('interview'))},//json
+                dataType: 'json',
+                url: 'get_interview_info/',
+                success:function (msg) {
+                    var team = msg['team'];
+                    var date = msg['date'];
+                    var start_time = msg['start_time'];
+                    var end_time = msg['end_time'];
+                    var location = msg['location'];
+                    var remarks = msg['remarks'];
+                    tab += '<tr>';
+                    tab += "<td>" + String(GetQueryString('interview')) + "</td>";
+                    tab += "<td>" + team + "</td>";
+                    tab += "<td>" + date + "</td>";
+                    tab += "<td>" + start_time + "</td>";
+                    tab += "<td>" + end_time + "</td>";
+                    tab += "<td>" + location + "</td>";
+                    tab += "<td>" + remarks + "</td>";
+                    tab += '</tr>';
+                    tab += '</tbody>';
+                    tab += '</table>';
+                    div1 = document.getElementById('interview_info');
+                    div1.innerHTML=tab;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    // 状态码
+                    alert(XMLHttpRequest.status);
+                    // 状态
+                    alert(XMLHttpRequest.readyState);
+                    // 错误信息
+                    alert(textStatus);
+                }
+            });
+            creatTab();
+        }
+        function creatTab(){
+            var list = "hhh";
+            var tab = '<table class="table"><thead><table class="table">\n' +
+                    '<thead>\n' +
+                    '<tr>\n' +
+                    '<th>#</th>\n' +
+                    '<th>学号</th>\n' +
+                    '<th>姓名</th>\n' +
+                    '</tr>\n' +
+                    '</thead>\n' +
+                    '<tbody>';
+            jQuery.ajax({
+                type: 'POST',
+                data: {'interview': String(GetQueryString('interview'))},//json
+                dataType: 'json',
+                url: 'get_interview_students/',
+                success:function (msg) {
+                    list = msg['list'];
+                    {#interview_list = JSON.parse(list);#}
+                    var name_list = msg['name_list'];
+                    var splited_list = list.split(' ');
+                    var splited_name_list = name_list.split(' ');
+                    for(var i = 1; i < splited_list.length; i++){
+                        if(i == 0)
+                            continue;
+                        tab += '<tr>';
+                        tab += "<td>" + String(i) + "</td>";
+                        tab += "<td><label id=\"team" + String(i) + "\">" + String(splited_list[i]) + "</label></td>";
+                        tab += "<td>" + String(splited_name_list[i]) + "</td>"
+                        tab += '</tr>';}
+                    tab += '</tbody>';
+                    tab += '</table>';
+                    div1 = document.getElementById('mytab');
+                    div1.innerHTML=tab;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    // 状态码
+                    alert(XMLHttpRequest.status);
+                    // 状态
+                    alert(XMLHttpRequest.readyState);
+                    // 错误信息
+                    alert(textStatus);
+                }
+            });
+        }
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+        function reload() {
+            creatTab();
+        }
+        setInterval(reload,5000)
     </script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="/static/assets/js/bootstrap.min.js"></script>

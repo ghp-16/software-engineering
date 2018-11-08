@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b3077b7-ea31-41bc-96b6-7131f1f5778c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DjangoMySQLDemo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoMySQLDemo/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DjangoMySQLDemo/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoMySQLDemo/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myblog/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/myblog/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myblog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/myblog/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/left.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/left.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/left_judge.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/left_judge.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/left_team.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/left_team.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/left_web.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/left_web.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/checkin_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/checkin_index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/interview_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/interview_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/judge_interview.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/judge_interview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/manage_interview.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/manage_interview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/student_checkin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/student_checkin.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,20 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="left.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/left.html">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/myblog/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="31" column="44" selection-start-line="31" selection-start-column="44" selection-end-line="31" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="left_judge.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/left_judge.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+            <state relative-caret-position="-18806">
+              <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -50,26 +40,13 @@
       <file leaf-file-name="judge_interview.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/judge_interview.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="65" column="13" selection-end-line="70" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="student_checkin.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/student_checkin.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="left_team.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/left_team.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="24" column="71" selection-start-line="24" selection-start-column="71" selection-end-line="24" selection-end-column="71" />
+            <state relative-caret-position="266">
+              <caret line="29" column="40" lean-forward="true" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#hr#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,20 +54,51 @@
       <file leaf-file-name="checkin_index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/checkin_index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+            <state relative-caret-position="949">
+              <caret line="105" column="7" selection-start-line="105" selection-start-column="7" selection-end-line="105" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="interview_edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/interview_edit.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="413" lean-forward="true" selection-start-line="413" selection-end-line="413" />
               <folding>
-                <element signature="n#style#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#center#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="left_web.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/left_web.html">
+      <file leaf-file-name="manage_interview.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/manage_interview.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
+            <state relative-caret-position="3876">
+              <caret line="204" column="7" selection-start-line="204" selection-start-column="7" selection-end-line="204" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="student_checkin.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/student_checkin.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="159">
+              <caret line="23" column="34" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#hr#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DjangoMySQLDemo/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
             </state>
           </provider>
         </entry>
@@ -98,22 +106,8 @@
       <file leaf-file-name="manage_team.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/manage_team.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1425">
-              <caret line="75" column="17" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_judge.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/main_judge.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/main.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+            <state relative-caret-position="406">
+              <caret line="56" column="13" lean-forward="true" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -141,6 +135,7 @@
       <find>post</find>
       <find>session</find>
       <find>choose</find>
+      <find>list</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,16 +159,11 @@
         <option value="$PROJECT_DIR$/templates/main.html" />
         <option value="$PROJECT_DIR$/DjangoMySQLDemo/test_models.py" />
         <option value="$PROJECT_DIR$/DjangoMySQLDemo/test_views.py" />
-        <option value="$PROJECT_DIR$/DjangoMySQLDemo/settings.py" />
         <option value="$PROJECT_DIR$/.gitlab-ci.yml" />
-        <option value="$PROJECT_DIR$/templates/manage_interview.html" />
         <option value="$PROJECT_DIR$/templates/index.html" />
-        <option value="$PROJECT_DIR$/templates/checkin_index.html" />
         <option value="$PROJECT_DIR$/static/index.css" />
         <option value="$PROJECT_DIR$/myblog/qrcode.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/DjangoMySQLDemo/urls.py" />
-        <option value="$PROJECT_DIR$/myblog/views.py" />
         <option value="$PROJECT_DIR$/templates/qrcode_check_in.html" />
         <option value="$PROJECT_DIR$/templates/qrcode_producer.html" />
         <option value="$PROJECT_DIR$/myblog/models.py" />
@@ -181,6 +171,12 @@
         <option value="$PROJECT_DIR$/templates/left_web.html" />
         <option value="$PROJECT_DIR$/templates/left.html" />
         <option value="$PROJECT_DIR$/templates/left_judge.html" />
+        <option value="$PROJECT_DIR$/DjangoMySQLDemo/settings.py" />
+        <option value="$PROJECT_DIR$/DjangoMySQLDemo/urls.py" />
+        <option value="$PROJECT_DIR$/myblog/views.py" />
+        <option value="$PROJECT_DIR$/templates/checkin_index.html" />
+        <option value="$PROJECT_DIR$/templates/interview_edit.html" />
+        <option value="$PROJECT_DIR$/templates/manage_interview.html" />
         <option value="$PROJECT_DIR$/templates/judge_interview.html" />
         <option value="$PROJECT_DIR$/templates/student_checkin.html" />
       </list>
@@ -195,10 +191,10 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="950" />
-    <option name="width" value="980" />
-    <option name="height" value="1040" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="952" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -206,7 +202,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -217,12 +212,18 @@
             <path>
               <item name="NEWEST-2018-11-3" type="b2602c69:ProjectViewProjectNode" />
               <item name="NEWEST-2018-11-3" type="462c0819:PsiDirectoryNode" />
+              <item name="media" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NEWEST-2018-11-3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NEWEST-2018-11-3" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -232,6 +233,11 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\JetBrains\PyCharm 2018.1.3\PyCharmPrograms\MY_WORK\NEWEST-2018-11-3" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -311,20 +317,35 @@
       <window_info anchor="bottom" id="Python Console" order="13" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.33044732" />
       <window_info anchor="bottom" id="Terminal" order="12" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1689008" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14008042" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1689008" />
+      <window_info anchor="right" id="SciView" order="3" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="5" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33044732" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="manage.py@DjangoMySQLDemo" order="4" visible="true" weight="0.32239658" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32952926" />
+      <window_info anchor="bottom" id="Terminal" order="12" />
+      <window_info anchor="bottom" id="Python Console" order="13" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -435,13 +456,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DjangoMySQLDemo/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="81" column="53" selection-start-line="81" selection-start-column="53" selection-end-line="81" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/student_signup.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -468,9 +482,6 @@
           <caret line="137" column="67" selection-start-line="136" selection-start-column="14" selection-end-line="137" selection-end-column="67" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/interview_edit.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/DjangoMySQLDemo/test_models.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -513,16 +524,6 @@
         <state relative-caret-position="-1938" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DjangoMySQLDemo/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="45" column="50" selection-start-line="45" selection-start-column="50" selection-end-line="45" selection-end-column="50" />
-          <folding>
-            <element signature="e#639#671#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -537,16 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/myblog/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="638" column="10" lean-forward="true" selection-start-line="638" selection-start-column="10" selection-end-line="638" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/myblog/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -558,13 +549,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="19" column="35" lean-forward="true" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/manage_interview.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -610,16 +594,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/checkin_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/left_team.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
@@ -636,22 +610,79 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/manage_team.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1425">
-          <caret line="75" column="17" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
+        <state relative-caret-position="406">
+          <caret line="56" column="13" lean-forward="true" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DjangoMySQLDemo/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DjangoMySQLDemo/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="82" column="4" selection-start-line="82" selection-start-column="4" selection-end-line="82" selection-end-column="4" />
+          <folding>
+            <element signature="e#639#671#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myblog/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18806">
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/judge_interview.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="65" column="13" selection-end-line="70" selection-end-column="7" />
+        <state relative-caret-position="266">
+          <caret line="29" column="40" lean-forward="true" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#hr#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/manage_interview.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3876">
+          <caret line="204" column="7" selection-start-line="204" selection-start-column="7" selection-end-line="204" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/interview_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="413" lean-forward="true" selection-start-line="413" selection-end-line="413" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#center#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/checkin_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="949">
+          <caret line="105" column="7" selection-start-line="105" selection-start-column="7" selection-end-line="105" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/student_checkin.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+        <state relative-caret-position="159">
+          <caret line="23" column="34" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#hr#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
