@@ -10,7 +10,7 @@ class Employee(models.Model):
     number = models.CharField(max_length=10, default="2016011123")
     major = models.CharField(max_length=15, default="计算机系")
     grade = models.CharField(max_length=5, default="大一")
-    txted = models.CharField(max_length=4000, default="无")
+    txted = models.CharField(max_length=4000, default="")
     choose = models.CharField(max_length=4000, default="")
     
 
@@ -18,6 +18,7 @@ class Team(models.Model):
     name = models.CharField(max_length=10 , default="划水队")
     captain = models.CharField(max_length=10 , default="可达鸭")
     captain_num = models.CharField(max_length=10 , default="2016011392")
+    form = models.CharField(max_length=4000, default="{\"team\":\"军乐队\",\"temp_list\":[{\"name\":\"才华\",\"value\":\"99\"},{\"name\":\"谈吐\",\"value\":\"99\"},{\"name\":\"形象\",\"value\":\"100\"}]}")
     # interview = ListField()
 
 

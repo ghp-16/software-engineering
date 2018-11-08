@@ -226,11 +226,11 @@ def homepage(request):
 def homepage_info(request):
     post = request.session.get('username')
     if request.session.get('usertype')=="student":
-        template = get_template('left.html')
+        template = get_template('left_web.html')
     elif request.session.get('usertype')=="judge":
-        template = get_template('left_judge.html')
+        template = get_template('left_web.html')
     elif request.session.get('usertype')=="team_manager":
-        template = get_template('left_team.html')
+        template = get_template('left_web.html')
     else:
         template = get_template('left_web.html')
     html = template.render(locals())
@@ -662,17 +662,45 @@ def new_interview(request):
         info = "已建立面试 \"" + str(request.body.decode('utf-8'))
         response = HttpResponse(json.dumps({"info": info}))
         return response
-
-# @csrf_exempt
-# def del_team(request):
-#     if request.is_ajax():
-#         team_name = request.POST.get('team_name')
-#         Team.objects.filter(name=team_name).first().delete()
-#         info = "已删除队伍\"" + str(team_name) + "\""
-#         response = HttpResponse(json.dumps({"info": info}))
-#         return response
+#-------------------------------form_edit.html---------------------
 
 
+@csrf_exempt
+def form_edit(request):
+    if request.is_ajax():
+        print(request.body.decode('utf-8'))
+        print(type(request.body.decode('utf-8')))
+        json_data=json.loads(request.body.decode('utf-8'))
+        print(json_data)
+        print(json_data['team'])
+
+        temp_team = Team.objects.get(name=str(json_data['team']))
+        print("temp_team:"+temp_team.form)
+        data = json.loads(temp_team.form)
+        print(data)
+        print(type(data))
+
+        # info = "已建立表格 \"" + str(request.body.decode('utf-8'))
+        response = HttpResponse(json.dumps(data))
+        return response
+
+@csrf_exempt
+def create_form(request):
+    if request.is_ajax():
+        print(request.body.decode('utf-8'))
+        print(type(request.body.decode('utf-8')))
+        json_data=json.loads(request.body.decode('utf-8'))
+        print(json_data)
+        print(json_data['team'])
+        print(json_data['temp_list'])
+        print(type(json_data['temp_list']))
+        temp_team = Team.objects.get(name=str(json_data['team']))
+        temp_team.form = request.body.decode('utf-8')
+        temp_team.save()
+        print(temp_team.form)
+        info = "已建立表格 \"" + str(request.body.decode('utf-8'))
+        response = HttpResponse(json.dumps({"info": info}))
+        return response
 #-------------------------------manage_interview.html---------------------
 
 
